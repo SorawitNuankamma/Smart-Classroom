@@ -14,14 +14,20 @@ export default function Button(props) {
       setBtnClass(
         "mt-24 bg-sky-500 px-5 py-3 text-white rounded-md text-lg lg:mt-0"
       );
+    } else if (props.type == "large") {
+      setBtnClass(" bg-sky-500 px-5 py-3 text-white rounded-md text-lg ");
     }
   });
 
+  const handleClick = () => {
+    window.location.href = props.path;
+  };
+
   return (
     <div className="">
-      <a className={btnClass} href="#">
+      <button className={btnClass} onClick={handleClick}>
         {props.text}
-      </a>
+      </button>
     </div>
   );
 }

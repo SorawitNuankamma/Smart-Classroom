@@ -4,7 +4,6 @@ import Navbar from "../components/navbar";
 export default function Frontpage() {
   return (
     <div className="h-screen">
-      <Navbar />
       <div className="px-16 grid my-20 gap-y-8 lg:px-48 lg:grid-cols-2">
         <div className="">
           <h1 className="text-5xl font-bold mb-10 text-blue-600/75">
@@ -24,7 +23,7 @@ export default function Frontpage() {
           />
         </div>
         <div className="mt-24 lg:mt-12">
-          <Button text="Create a classroom" />
+          <Button text="Create a classroom" path="/login" />
         </div>
       </div>
     </div>
