@@ -18,7 +18,7 @@ export default function Navbar() {
   return (
     <>
       {/* Large screen navigation */}
-      <div className="relative px-16 flex justify-between py-5 lg:px-48">
+      <div className="relative px-8 flex justify-between py-5 lg:px-48">
         <span className="font-bold text-2xl  text-zinc-700">
           Smart Classroom
         </span>

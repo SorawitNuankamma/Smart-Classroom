@@ -11,9 +11,7 @@ export default function Button(props) {
         "px-5 py-4 text-zinc-700 font-medium rounded-md text-lg lg:mt-0"
       );
     } else if (props.type == "small") {
-      setBtnClass(
-        "mt-24 bg-sky-500 px-5 py-3 text-white rounded-md text-lg lg:mt-0"
-      );
+      setBtnClass("bg-sky-500 px-5 py-3 text-white rounded-md text-lg ");
     } else if (props.type == "large") {
       setBtnClass(" bg-sky-500 px-5 py-3 text-white rounded-md text-lg ");
     }

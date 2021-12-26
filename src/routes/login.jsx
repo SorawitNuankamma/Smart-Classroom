@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 //service
 const auth = require("../services/authentication");
@@ -9,6 +10,8 @@ export default function Login(props) {
   const [password, setPassword] = useState("");
   const [validatorText, setValidatorText] = useState("Unknown error");
   const [validatorClass, setValidatorClass] = useState("invisible");
+
+  let navigate = useNavigate();
 
   const setEmailForm = (e) => {
     setEmail(e.target.value);
@@ -34,12 +37,10 @@ export default function Login(props) {
         setValidatorClass("text-red-500");
         return;
       }
-      console.log(res.token);
       setValidatorText("Login successful");
       setValidatorClass("text-green-500");
       window.sessionStorage.accessToken = res.token;
-      console.log(window.sessionStorage);
-      //window.location.href = "/";
+      navigate("/home");
     }
   };
 

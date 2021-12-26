@@ -8,6 +8,8 @@ export default function UserSetup(props) {
   const [validatorText, setValidatorText] = useState("Unknown error");
   const [validatorClass, setValidatorClass] = useState("invisible");
 
+  // TODO : check if user just signup if no reject this page
+
   const setNameForm = (e) => {
     setName(e.target.value);
   };
@@ -21,7 +23,7 @@ export default function UserSetup(props) {
     const data = {
       name: name,
     };
-    let res = await userService.UpdateMyUser(data);
+    let res = await userService.updateMyUser(data);
     if (res.status === "fail") {
       setValidatorText("Unknown Error");
       setValidatorClass("text-red-500");
