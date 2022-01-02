@@ -18,6 +18,22 @@ module.exports = {
         iron: "#F9F9F9",
         liture: "#606060",
       },
+      width: {
+        128: "32rem",
+      },
+      screens: {
+        tablet: "640px",
+        // => @media (min-width: 640px) { ... }
+
+        laptop: "900px",
+        // => @media (min-width: 1024px) { ... }
+
+        desktop: "1160px",
+        // => @media (min-width: 1280px) { ... }
+      },
+      minHeight: {
+        30: "30rem",
+      },
     },
   },
   variants: {},

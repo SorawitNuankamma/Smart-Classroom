@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Button(props) {
   const [btnClass, setBtnClass] = useState(
     "mt-24 bg-sky-500 px-5 py-4 text-white rounded-md text-2xl "
   );
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (props.type == "link") {
@@ -18,7 +21,7 @@ export default function Button(props) {
   });
 
   const handleClick = () => {
-    window.location.href = props.path;
+    navigate(`${props.path}`);
   };
 
   return (

@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../redux/root-action";
 
 //service
 const auth = require("../services/authentication");
@@ -11,7 +14,13 @@ export default function Login(props) {
   const [validatorText, setValidatorText] = useState("Unknown error");
   const [validatorClass, setValidatorClass] = useState("invisible");
 
-  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { setCurrentUser, setCurrentMenu } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
+
+  const navigate = useNavigate();
 
   const setEmailForm = (e) => {
     setEmail(e.target.value);
@@ -22,6 +31,7 @@ export default function Login(props) {
   };
 
   const handleLogin = async () => {
+    console.log(actionCreators);
     if (email === "" || password === "") {
       setValidatorText("Please specify a correct email or password");
       setValidatorClass("text-red-500");
@@ -39,6 +49,10 @@ export default function Login(props) {
       }
       setValidatorText("Login successful");
       setValidatorClass("text-green-500");
+      // set app user
+      setCurrentUser(res.data.user);
+      setCurrentMenu("home");
+      //setCurrentMenu("home");
       window.sessionStorage.accessToken = res.token;
       navigate("/home");
     }

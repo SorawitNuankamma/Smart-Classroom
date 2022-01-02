@@ -3,71 +3,49 @@ import { useNavigate } from "react-router-dom";
 
 import "./styles/colors.css";
 
+//
+import GraderSetup from "../components/graderSetup";
+import ColorPicker from "../components/colorPicker";
+import IntervalPicker from "../components/intervalPicker";
+
+//TODO Refactoring make set Time Schedule and Set Grading Policy as own component
+
 //Service
 const auth = require("../services/authentication");
-const userService = require("../services/user");
+const classroomService = require("../services/classroom");
 
 export default function CreateClassroom() {
-  //State for submit
-  const [renderState, setRenderState] = useState(false); //throwaway state for forcing page re-render
-  const [nameField, setNameField] = useState("");
-  const [descField, setDescField] = useState("");
-  const [timeSchedules, setTimeSchedules] = useState([]);
-  const [classColor, setClassColor] = useState("green");
-  //UI
-  const [dateSelected, setDateSelect] = useState("Monday");
-  const [startTime, setStartTime] = useState("0:00");
-  const [endTime, setEndTime] = useState("0:00");
-  //not scalable
-  const [colorSelector, setColorSelector] = useState([
-    "border-4 border-indigo-600",
-    "",
-    "",
-    "",
-  ]);
+  // UI State
   const [initState, setInitState] = useState("opacity-0	translate-x-10	");
-
-  // color to choose from
-  const colorList = ["green", "red", "blue", "yellow"];
+  // Field
+  const [nameField, setNameField] = useState(""); // Submit State
+  const [descField, setDescField] = useState(""); // Submit State
+  const [ruleField, setRuleField] = useState(""); // Submit State
+  const [classColor, setClassColor] = useState("green"); // Submit State
+  const [timeIntervals, setTimeIntervals] = useState([]); // Submit State
 
   const navigate = useNavigate();
 
-  // Set Time Schedule
-  const handleDateSelect = (e) => {
-    setDateSelect(e.target.value);
-  };
-
-  const handleStartTime = (e) => {
-    setStartTime(e.target.value);
-  };
-
-  const handleEndTime = (e) => {
-    setEndTime(e.target.value);
-  };
-
-  const handleTimeSchedules = () => {
-    const timeScheduleObject = [
-      dateSelected,
-      {
-        start: startTime,
-        end: endTime,
-      },
-    ];
-    const timeScheduleList = timeSchedules;
-    timeScheduleList.push(timeScheduleObject);
-    setTimeSchedules(timeScheduleList);
-    setRenderState(!renderState);
-  };
-
-  const handleColorSelector = (colorIndex) => {
-    const selectedColor = colorList[colorIndex];
-    if (selectedColor === classColor) {
-      return;
+  const handleCreateClassroom = async () => {
+    //Validate data
+    //packing data
+    const classroomObject = {
+      name: nameField,
+      description: descField,
+      color: classColor,
+      rules: ruleField,
+      timetable: timeIntervals,
+    };
+    let res = await classroomService.postClassroom(classroomObject);
+    if (res.status === "fail") {
+      navigate("/home/error");
+    } else {
+      window.localStorage.setItem(
+        "newClassroom",
+        JSON.stringify(res.data.newClassroom.id)
+      );
+      navigate("/home/createClassroomSuccessful");
     }
-    let template = ["", "", "", ""];
-    template[colorIndex] = "border-4 border-indigo-600";
-    setColorSelector(template);
-    setClassColor(selectedColor);
   };
 
   // ComponentDidMount
@@ -91,7 +69,7 @@ export default function CreateClassroom() {
           <span className="text-5xl text-gray-600 ">Create A Classroom</span>
           <div className="">
             <label className="block mt-8">
-              <span className="text-gray-700">Class name</span>
+              <span className="text-gray-700">Classroom name</span>
               <input
                 type="text"
                 className="
@@ -103,11 +81,14 @@ export default function CreateClassroom() {
                     shadow-sm
                     focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                   "
-                placeholder=""
+                placeholder="classroom name"
+                onChange={(e) => {
+                  setNameField(e.target.value);
+                }}
               ></input>
             </label>
             <label className="block mt-8">
-              <span className="text-gray-700">Class Description</span>
+              <span className="text-gray-700">Classroom Description</span>
               <textarea
                 className="
                     mt-1
@@ -120,105 +101,40 @@ export default function CreateClassroom() {
                   "
                 rows="3"
                 spellcheck="false"
+                placeholder="a brief description of the classroom"
+                onChange={(e) => {
+                  setDescField(e.target.value);
+                }}
               ></textarea>
             </label>
-            <div className="mt-8">
-              <span>Color</span>
-              <div className="flex flex-row gap-x-5 mt-1">
-                {colorList.map((el) => (
-                  <button
-                    onClick={(e) => handleColorSelector(colorList.indexOf(el))}
-                    className={`h-20 w-20 rounded-md shadow-lg color-${el} ${
-                      colorSelector[colorList.indexOf(el)]
-                    }`}
-                  ></button>
-                ))}
-              </div>
-            </div>
-            <div className="mt-8">
-              <span>Set Time Schedule</span>
-              <div className="mt-3">
-                <div>
-                  <span>Day</span>
-                  <select
-                    class="
-                  mt-2
-                  ml-3
+            <label className="block mt-8">
+              <span className="text-gray-700">Classroom Rules</span>
+              <textarea
+                className="
+                    mt-1
+                    block
+                    w-full
                     rounded-md
                     border-gray-300
                     shadow-sm
                     focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                   "
-                    onChange={handleDateSelect}
-                  >
-                    <option>Monday</option>
-                    <option>Tuesday</option>
-                    <option>Wednesday</option>
-                    <option>Thursday</option>
-                    <option>Friday</option>
-                    <option>Saturday</option>
-                    <option>Sunday</option>
-                  </select>
-                </div>
-                <div>
-                  <span>Start Time</span>
-                  <input
-                    type="text"
-                    className="
-                    mt-2
-                    ml-3
-                    rounded-md
-                    border-gray-300
-                    shadow-sm
-                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                  "
-                    placeholder="example 9:30"
-                    onChange={handleStartTime}
-                  ></input>
-                </div>
-                <div>
-                  <span>End Time</span>
-                  <input
-                    type="text"
-                    className="
-                    mt-2
-                    ml-3
-                    rounded-md
-                    border-gray-300
-                    shadow-sm
-                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                  "
-                    placeholder="example 12:00"
-                    onChange={handleEndTime}
-                  ></input>
-                </div>
-              </div>
-              <button
-                className="bg-iron p-4 text-lg text-liture rounded-md shadow-md block mt-5"
-                onClick={handleTimeSchedules}
-              >
-                Add Schedule
-              </button>
-              <div className="mt-3 w-96">
-                {timeSchedules.map((el) => (
-                  <button
-                    className={`p-3 rounded-md shadow-lg color-${el[0]} mr-3`}
-                  >{`${el[0]} ${el[1].start}-${el[1].end}`}</button>
-                ))}
-              </div>
-              <button className="bg-iron p-4 text-lg text-liture rounded-md shadow-md block mt-5">
-                Set grading policy
-              </button>
-              <button className="bg-iron p-4 text-lg text-liture rounded-md shadow-md block mt-5">
-                Set grading policy
-              </button>
-              <button className="bg-iron p-4 text-lg text-liture rounded-md shadow-md block mt-5">
-                Set grading policy
-              </button>
-              <button className="bg-iron p-4 text-lg text-liture rounded-md shadow-md block mt-5">
-                Set grading policy
-              </button>
-            </div>
+                rows="3"
+                spellcheck="false"
+                placeholder="List of classroom rules"
+                onChange={(e) => {
+                  setRuleField(e.target.value);
+                }}
+              ></textarea>
+            </label>
+            <ColorPicker callback={setClassColor} state={classColor} />
+            <IntervalPicker callback={setTimeIntervals} state={timeIntervals} />
+            <button
+              className={`p-6 rounded-md shadow-lg text-xl text-white mr-3 mt-2 bg-green-500`}
+              onClick={handleCreateClassroom}
+            >
+              Create A Classroom
+            </button>
           </div>
         </div>
       </div>
