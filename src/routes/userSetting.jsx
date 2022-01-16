@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 //Service
 const auth = require("../services/authentication");
-const userService = require("../services/user");
+//const userService = require("../services/user");
 
 export default function UserSetting() {
   const [user, setUser] = useState({
@@ -17,9 +17,10 @@ export default function UserSetting() {
   useEffect(() => {
     async function initial() {
       try {
+        console.log("wtf");
         await auth.isLogin();
-        const res = await userService.getMyUser();
-        setUser(res.data.user);
+        //const res = await userService.getMyUser();
+        //setUser(res.data.user);
         // Initial Animation
         setInitState("opacity-100 translate-x-0");
       } catch {

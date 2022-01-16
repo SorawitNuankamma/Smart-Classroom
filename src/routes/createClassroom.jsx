@@ -64,8 +64,10 @@ export default function CreateClassroom() {
 
   return (
     <>
-      <div className={`transition-all duration-500 flex flex-col ${initState}`}>
-        <div className="m-12 space-y-4 font-kanit">
+      <div
+        className={`transition-all duration-500 flex flex-col ${initState} w-fit`}
+      >
+        <div className="m-12 space-y-4 font-kanit w-fit">
           <span className="text-5xl text-gray-600 ">Create A Classroom</span>
           <div className="">
             <label className="block mt-8">

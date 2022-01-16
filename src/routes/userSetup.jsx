@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 //Service
 const userService = require("../services/user");
@@ -9,6 +10,7 @@ export default function UserSetup(props) {
   const [validatorClass, setValidatorClass] = useState("invisible");
 
   // TODO : check if user just signup if no reject this page
+  const navigate = useNavigate();
 
   const setNameForm = (e) => {
     setName(e.target.value);
@@ -29,7 +31,7 @@ export default function UserSetup(props) {
       setValidatorClass("text-red-500");
       return;
     }
-    console.log(res);
+    navigate("../home");
   };
 
   return (

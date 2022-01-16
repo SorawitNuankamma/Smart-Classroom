@@ -36,6 +36,9 @@ export default function Content() {
       <div className="mt-8 font-kanit">{parse(draftToHtml(content.body))}</div>
 
       <Button text="Edit Annoucement" type="small" path="edit" />
+      {content.type === "assignment" && (
+        <Button text="Submit Assignment" type="small" path="submitAssignment" />
+      )}
     </>
   );
 }

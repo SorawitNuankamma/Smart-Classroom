@@ -60,23 +60,23 @@ export default function Navbar() {
             <path
               d="M4 17H45"
               stroke="white"
-              stroke-width="7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M4 4H45"
               stroke="white"
-              stroke-width="7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M4 30H45"
               stroke="white"
-              stroke-width="7"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>

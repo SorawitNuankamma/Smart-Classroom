@@ -16,21 +16,40 @@ import CreateClassSuccessful from "./routes/createClassSuccessful";
 import Classroom from "./routes/classroom";
 import Main from "./routes/classroom/main";
 import Information from "./routes/classroom/information";
-import Lesson from "./routes/classroom/lesson";
-import Assignment from "./routes/classroom/assignment";
-import Annoucement from "./routes/classroom/annoucement";
 import CreateContent from "./routes/classroom/createContent";
 import Content from "./routes/classroom/content";
+import AllContent from "./routes/classroom/allContent";
+import SubmitAssignment from "./routes/classroom/submitAssignment";
+import LoginResult from "./routes/loginResult";
+import PublicApp from "./routes/publicApp";
+import MainPage from "./routes/publicApp/main-page";
+import AboutPage from "./routes/publicApp/about-page";
+import ManualPage from "./routes/publicApp/manual-page";
+import AuthenPage from "./routes/publicApp/authen-page";
+import LoginLine from "./routes/publicApp/authen-widget/login-line";
+import AuthenResult from "./routes/publicApp/authen-widget/authen-result";
+/*
+<Route path="/" element={<Navbar />}>
+          <Route path="" element={<Frontpage />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="user_setup" element={<UserSetup />} />
+          <Route path="loginResult" element={<LoginResult />} />
+        </Route>
+*/
 
 function App() {
   return (
     <div className="relative">
       <Routes>
-        <Route path="/" element={<Navbar />}>
-          <Route path="" element={<Frontpage />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="user_setup" element={<UserSetup />} />
+        <Route path="/" element={<PublicApp />}>
+          <Route index element={<MainPage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="manual" element={<ManualPage />} />
+          <Route path="authentication" element={<AuthenPage />}>
+            <Route index element={<LoginLine />} />
+            <Route path="result" element={<AuthenResult />} />
+          </Route>
         </Route>
         <Route path="/home" element={<Dashbar />}>
           <Route index element={<Home />} />
@@ -39,9 +58,22 @@ function App() {
           <Route path="myClassroom/:id" element={<Classroom />}>
             <Route index element={<Main />} />
             <Route path="information" element={<Information />}></Route>
-            <Route path="annoucement" element={<Annoucement />}></Route>
-            <Route path="lesson" element={<Lesson />}></Route>
-            <Route path="assignment" element={<Assignment />}></Route>
+            <Route
+              path="annoucement"
+              element={
+                <AllContent type="annoucement" createPath="createAnnoucement" />
+              }
+            ></Route>
+            <Route
+              path="lesson"
+              element={<AllContent type="lesson" createPath="createLesson" />}
+            ></Route>
+            <Route
+              path="assignment"
+              element={
+                <AllContent type="assignment" createPath="createAssignment" />
+              }
+            ></Route>
             <Route path="annoucement/:contentId" element={<Content />}></Route>
             <Route path="lesson/:contentId" element={<Content />}></Route>
             <Route path="assignment/:contentId" element={<Content />}></Route>
@@ -68,6 +100,10 @@ function App() {
             <Route
               path="assignment/:contentId/edit"
               element={<CreateContent edit={true} type="assignment" />}
+            ></Route>
+            <Route
+              path="assignment/:contentId/submitAssignment"
+              element={<SubmitAssignment />}
             ></Route>
           </Route>
           <Route path="setting" element={<UserSetting />} />

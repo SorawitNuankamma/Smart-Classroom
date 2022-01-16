@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../redux/root-action";
-import { TramRounded, WindowSharp } from "@mui/icons-material";
+import { WindowSharp } from "@mui/icons-material";
 
 //service
 const auth = require("../services/authentication");
@@ -69,12 +69,42 @@ export default function Login(props) {
     <div className="h-screen">
       <div className="grid grid-cols-1 justify-items-center ">
         <div className="w-80 p-10 mt-20 bg-white grid grid-cols-1 justify-items-center gap-6 rounded-md shadow-md">
-          <div className="text-3xl font-bold text-slate-700 ">
-            Login with Line
-          </div>
-          <img src="./images/User.svg" alt="icon" />
+          <div className="text-3xl font-bold text-slate-700">Login</div>
+          <input
+            type="text"
+            className="
+                    block
+                    w-full
+                    px-0.5
+                    border-0 border-b-2 border-gray-200
+                    focus:ring-0 focus:border-blue-500
+                    mt-5
+                  "
+            placeholder="Email"
+            onChange={setEmailForm}
+          ></input>
+          <input
+            type="password"
+            className="
+                    mt-0
+                    block
+                    w-full
+                    px-0.5
+                    border-0 border-b-2 border-gray-200
+                    focus:ring-0 focus:border-blue-500
+                  "
+            placeholder="Password"
+            onChange={setPasswordForm}
+          ></input>
+          <span className={validatorClass}>{validatorText}</span>
           <button
-            className="block mt-10 bg-line font-kanit text-white py-2 px-5 rounded-md text-xl "
+            onClick={handleLogin}
+            className="inline-flex items-center px-8 py-4 leading-6 text-xl font-semibold shadow rounded-md text-white bg-sky-500 hover:bg-indigo-400 transition ease-in-out duration-150 "
+          >
+            login
+          </button>
+          <button
+            className="bg-line font-kanit text-white py-2 px-5 rounded-md text-xl "
             onClick={handleLineLogin}
           >
             <img
@@ -84,6 +114,9 @@ export default function Login(props) {
             />
             Log in with LINE
           </button>
+          <Link to="../register" className="text-sky-500">
+            Register new account
+          </Link>
         </div>
       </div>
     </div>

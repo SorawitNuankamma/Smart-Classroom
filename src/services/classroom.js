@@ -1,5 +1,4 @@
 exports.postClassroom = async (data) => {
-  // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch("http://localhost:5000/api/classrooms/", {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -14,7 +13,6 @@ exports.postClassroom = async (data) => {
 };
 
 exports.getClassroom = async (id) => {
-  // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(`http://localhost:5000/api/classrooms/${id}`, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -30,10 +28,13 @@ exports.getClassroom = async (id) => {
 exports.getClassrooms = async (filterObj) => {
   let searchParams = new URLSearchParams(filterObj);
 
-  // TODO get token from localStorage
+  console.log(
+    `http://localhost:5000/api/classrooms?${searchParams.toString()}`
+  );
+
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `http://localhost:5000/api/classrooms?${searchParams}`,
+    `http://localhost:5000/api/classrooms?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin

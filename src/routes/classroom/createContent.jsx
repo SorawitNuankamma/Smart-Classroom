@@ -11,9 +11,14 @@ import draftToHtml from "draftjs-to-html";
 //Service
 const contentService = require("../../services/content");
 
+const ifAssignment = {
+  assignment: true,
+};
+
 export default function CreateContent(props) {
   const [renderState, setRenderState] = useState(false);
   const [contentTitle, setContentTitle] = useState("");
+  const [dueDate, setDueDate] = useState("none");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [editorHtml, setEditorHtml] = useState("");
 
@@ -36,6 +41,7 @@ export default function CreateContent(props) {
       type: props.type,
       body: convertToRaw(editorState.getCurrentContent()),
       classId: params.id,
+      dueDate: dueDate,
     };
     // IF EDIT
     if (props.edit) {
@@ -123,6 +129,26 @@ export default function CreateContent(props) {
         <div className="mt-8 font-sans min-h-30">
           <div className="">{parse(editorHtml)}</div>
         </div>
+        {ifAssignment[props.type] && (
+          <div className="mt-8 w-fit">
+            <label className="block ">
+              <span className="text-gray-700">Due Date</span>
+              <input
+                type="date"
+                className="
+                    mt-1
+                    block
+                    w-full
+                    rounded-md
+                    border-gray-300
+                    shadow-sm
+                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                  "
+                onChange={(e) => setDueDate(e.target.value)}
+              />
+            </label>
+          </div>
+        )}
         <div className="my-8">
           <button
             className="bg-sky-500 px-5 py-3 text-white rounded-md text-lg shadow-md"

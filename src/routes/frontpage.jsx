@@ -1,5 +1,4 @@
 import Button from "../components/button";
-import Navbar from "../components/navbar";
 
 export default function Frontpage() {
   return (
@@ -16,7 +15,7 @@ export default function Frontpage() {
         </div>
         <div>
           <img
-            src="./images/classroom_vector.jpg"
+            src="./images/classroom_vector.webp"
             width="739px"
             height="auto"
             alt="classroom_image"

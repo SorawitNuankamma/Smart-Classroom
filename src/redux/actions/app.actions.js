@@ -4,3 +4,17 @@ export const setCurrentMenu = (menu) => {
     payload: menu,
   };
 };
+
+export const setCurrentOperation = (operation) => {
+  return {
+    type: "SET_CURRENT_OPERATION",
+    payload: operation,
+  };
+};
+
+export const setCurrentAlert = (alert) => {
+  return {
+    type: "SET_CURRENT_ALERT",
+    payload: alert,
+  };
+};

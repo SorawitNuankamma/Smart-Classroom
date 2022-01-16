@@ -15,6 +15,7 @@ export default function Dashbar() {
     createClassroom: "text-gray-600",
     setting: "text-gray-600",
   });
+  // TODO menu change on mobile should close the bar
 
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -124,7 +125,7 @@ export default function Dashbar() {
         <Outlet />
       </div>
       {/* Mobile Navigation */}
-      <div className="absolute bottom-10 left-12 laptop:hidden">
+      <div className="bottom-0 left-12 laptop:hidden fixed">
         <div
           className={
             "fixed transition ease-in-out bottom-0 left-0 h-screen w-full backdrop-blur-xl bg-silver grid grid-cols-1 grid-rows-6 items-center justify-items-center" +

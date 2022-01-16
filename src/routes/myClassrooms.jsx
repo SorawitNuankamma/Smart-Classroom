@@ -6,7 +6,6 @@ import "./styles/colors.css";
 
 //Service
 const auth = require("../services/authentication");
-const userService = require("../services/user");
 const classroomService = require("../services/classroom");
 
 export default function MyClassrooms() {
@@ -25,6 +24,7 @@ export default function MyClassrooms() {
         const res = await classroomService.getClassrooms({
           "users.userId": state.user.currentUser.id,
         });
+        console.log(res);
         setClassrooms(res.data.classrooms);
         // Initial Animation
         setInitState("opacity-100 translate-x-0");
