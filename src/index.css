@@ -584,6 +584,9 @@ select {
 .z-10 {
   z-index: 10;
 }
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
 .m-12 {
   margin: 3rem;
 }
@@ -605,6 +608,9 @@ select {
 }
 .mt-24 {
   margin-top: 6rem;
+}
+.ml-3 {
+  margin-left: 0.75rem;
 }
 .mt-4 {
   margin-top: 1rem;
@@ -654,6 +660,9 @@ select {
 .mt-12 {
   margin-top: 3rem;
 }
+.ml-12 {
+  margin-left: 3rem;
+}
 .block {
   display: block;
 }
@@ -675,14 +684,14 @@ select {
 .contents {
   display: contents;
 }
-.h-16 {
-  height: 4rem;
-}
 .h-screen {
   height: 100vh;
 }
 .h-full {
   height: 100%;
+}
+.h-16 {
+  height: 4rem;
 }
 .h-32 {
   height: 8rem;
@@ -696,11 +705,18 @@ select {
 .w-96 {
   width: 24rem;
 }
-.w-16 {
-  width: 4rem;
+.w-fit {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.w-\[300px\] {
+  width: 300px;
 }
 .w-72 {
   width: 18rem;
+}
+.w-16 {
+  width: 4rem;
 }
 .w-full {
   width: 100%;
@@ -717,10 +733,6 @@ select {
 .w-screen {
   width: 100vw;
 }
-.w-fit {
-  width: -moz-fit-content;
-  width: fit-content;
-}
 .w-80 {
   width: 20rem;
 }
@@ -729,6 +741,15 @@ select {
 }
 .max-w-md {
   max-width: 28rem;
+}
+.max-w-6xl {
+  max-width: 72rem;
+}
+.max-w-2xl {
+  max-width: 42rem;
+}
+.max-w-\[24rem\] {
+  max-width: 24rem;
 }
 .-translate-y-20 {
   --tw-translate-y: -5rem;
@@ -761,8 +782,20 @@ select {
   -webkit-user-select: none;
           user-select: none;
 }
+.grid-cols-\[20px_1fr\] {
+  grid-template-columns: 20px 1fr;
+}
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.grid-cols-\[0px_1fr\] {
+  grid-template-columns: 0px 1fr;
+}
+.grid-cols-\[1fr_50px\] {
+  grid-template-columns: 1fr 50px;
+}
+.grid-cols-\[25px_1fr\] {
+  grid-template-columns: 25px 1fr;
 }
 .grid-rows-6 {
   grid-template-rows: repeat(6, minmax(0, 1fr));
@@ -852,10 +885,6 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(14 165 233 / var(--tw-bg-opacity));
 }
-.bg-iron {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 249 249 / var(--tw-bg-opacity));
-}
 .bg-titanium {
   --tw-bg-opacity: 1;
   background-color: rgb(222 233 247 / var(--tw-bg-opacity));
@@ -863,6 +892,10 @@ select {
 .bg-silver {
   --tw-bg-opacity: 1;
   background-color: rgb(246 250 255 / var(--tw-bg-opacity));
+}
+.bg-iron {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 249 249 / var(--tw-bg-opacity));
 }
 .bg-blue-400 {
   --tw-bg-opacity: 1;
@@ -938,10 +971,6 @@ select {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 }
-.py-5 {
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
-}
 .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
@@ -953,6 +982,10 @@ select {
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 .px-32 {
   padding-left: 8rem;
@@ -1018,13 +1051,13 @@ select {
   font-size: 1.125rem;
   line-height: 1.75rem;
 }
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-}
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
+}
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 .text-5xl {
   font-size: 3rem;
@@ -1057,13 +1090,13 @@ select {
   --tw-text-opacity: 1;
   color: rgb(63 63 70 / var(--tw-text-opacity));
 }
-.text-gray-600 {
-  --tw-text-opacity: 1;
-  color: rgb(75 85 99 / var(--tw-text-opacity));
-}
 .text-azure {
   --tw-text-opacity: 1;
   color: rgb(48 160 224 / var(--tw-text-opacity));
+}
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
 }
 .text-royal {
   --tw-text-opacity: 1;
@@ -1111,6 +1144,10 @@ select {
 .text-sky-500 {
   --tw-text-opacity: 1;
   color: rgb(14 165 233 / var(--tw-text-opacity));
+}
+.text-blue-400 {
+  --tw-text-opacity: 1;
+  color: rgb(96 165 250 / var(--tw-text-opacity));
 }
 .opacity-0 {
   opacity: 0;
@@ -1184,6 +1221,11 @@ select {
 .hover\:bg-indigo-400:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(129 140 248 / var(--tw-bg-opacity));
+}
+
+.hover\:text-blue-600:hover {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
 .focus\:border-indigo-300:focus {
@@ -1290,6 +1332,10 @@ select {
   .laptop\:translate-x-0 {
     --tw-translate-x: 0px;
     transform: var(--tw-transform);
+  }
+
+  .laptop\:grid-cols-classroomApp {
+    grid-template-columns: 300px 1fr;
   }
 }
 

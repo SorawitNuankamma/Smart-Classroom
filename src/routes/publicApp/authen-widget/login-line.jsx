@@ -48,13 +48,6 @@ export default function LoginLine() {
       >
         <span>สมัครสมาชิกใหม่</span>
       </button>
-      <button
-        onClick={() => {
-          setCurrentAlert("error");
-        }}
-      >
-        sdsd
-      </button>
     </div>
   );
 }

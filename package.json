@@ -12,6 +12,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "draftjs-to-html": "^0.9.1",
+    "filestack-js": "^3.25.0",
     "history": "^5.1.0",
     "html-react-parser": "^1.4.4",
     "immutable": "^4.0.0",

@@ -47,6 +47,10 @@ module.exports = {
       animation: {
         landing: "2s ease-in-out landing",
       },
+      gridTemplateColumns: {
+        // Complex site-specific column configuration
+        classroomApp: "300px 1fr",
+      },
     },
   },
   variants: {},

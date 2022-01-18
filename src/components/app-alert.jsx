@@ -39,10 +39,18 @@ export default function AppAlert() {
     <div
       className={`transition-all ease-in-out fixed top-10 left-1/2 -translate-x-48 w-96 z-10 ${visibility}`}
     >
-      <Alert severity="error">
-        <AlertTitle>ข้อผิดพลาด</AlertTitle>
-        ผู้ใช้ยังไม่ได้เป็นสมาชิก
-      </Alert>
+      {state.app.currentAlert && (
+        <Alert severity={state.app.currentAlert.type}>
+          <AlertTitle>{state.app.currentAlert.title}</AlertTitle>
+          {state.app.currentAlert.message}
+          {state.app.currentAlert.link &&
+            -(
+              <a href={state.app.currentAlert.link}>
+                <strong>รายละเอียด</strong>
+              </a>
+            )}
+        </Alert>
+      )}
     </div>
   );
 }

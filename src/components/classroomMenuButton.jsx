@@ -10,7 +10,7 @@ export default function ClassroomMenuButton(props) {
 
   return (
     <div
-      className="bg-iron cursor-pointer text-gray-600 text-xl w-96 py-5 px-5 rounded-md shadow-md mt-4"
+      className="bg-iron cursor-pointer text-gray-600 text-xl w-72 py-5 px-5 rounded-md shadow-md mt-4"
       onClick={handleRouting}
     >
       <span>{props.text}</span>

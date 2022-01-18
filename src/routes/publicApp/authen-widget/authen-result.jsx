@@ -23,10 +23,12 @@ export default function AuthenResult() {
   const [searchParams] = useSearchParams();
   //Redux
   const dispatch = useDispatch();
-  const { setCurrentOperation, setCurrentUser } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+  const {
+    setCurrentOperation,
+    setCurrentUser,
+    setCurrentAlert,
+    setCurrentMenu,
+  } = bindActionCreators(actionCreators, dispatch);
 
   const authenText = {
     login: {
@@ -55,6 +57,13 @@ export default function AuthenResult() {
           navigate(`..`);
           return;
         }
+        // Successfully login
+        setCurrentAlert({
+          type: "success",
+          title: "สำเร็จ",
+          message: "เข้าสู่ระบบสำเร็จ",
+          link: null,
+        });
         setCurrentUser(res.data.user);
         window.sessionStorage.accessToken = res.token;
         res = await isLogin();
@@ -64,6 +73,13 @@ export default function AuthenResult() {
           navigate(`..`);
           return;
         }
+        // Successfully signup
+        setCurrentAlert({
+          type: "success",
+          title: "สำเร็จ",
+          message: "สมัครสมาชิกสำเร็จ",
+          link: null,
+        });
         setCurrentUser(res.data.user);
         window.sessionStorage.accessToken = res.token;
         res = await isLogin();
@@ -88,11 +104,20 @@ export default function AuthenResult() {
           className="absolute"
         />
       </div>
-      <label className="font-kanit mt-10">
-        <Checkbox />
-        ตกลงตามข้อกำหนดและเงื่อนไข
-      </label>
-      <button className="bg-skyblue text-white mt-5 px-7 py-4 text-xl font-kanit rounded-md">
+      {state.app.currentOperation === "signup" ? (
+        <label className="font-kanit mt-10">
+          <Checkbox />
+          ตกลงตามข้อกำหนดและเงื่อนไข
+        </label>
+      ) : null}
+
+      <button
+        className="bg-skyblue text-white mt-5 px-7 py-4 text-xl font-kanit rounded-md"
+        onClick={() => {
+          setCurrentMenu("home");
+          navigate("/app");
+        }}
+      >
         <span>{authenText[state.app.currentOperation].button}</span>
       </button>
     </div>

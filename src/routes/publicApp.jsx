@@ -12,7 +12,6 @@ import AppAlert from "../components/app-alert";
 export default function PublicApp() {
   return (
     <>
-      <AppAlert />
       <PublicNavbar />
       <Outlet />
       <Footer />
