@@ -14,7 +14,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 const routeOf = {
   home: "",
   myClassroom: "my-classroom",
-  createClassroom: "create-classroom",
+  joinClassroom: "join-classroom",
   userSetting: "user-setting",
   signout: "signout",
 };
@@ -26,7 +26,7 @@ export default function ClassroomNavbar() {
   const [menuStyle, setMenuStyle] = useState({
     home: "text-azure bg-titanium border-r-azure border-r-4",
     myClassroom: "text-gray-600",
-    createClassroom: "text-gray-600",
+    joinClassroom: "text-gray-600",
     userSetting: "text-gray-600",
     signout: "text-gray-600",
   });
@@ -62,7 +62,7 @@ export default function ClassroomNavbar() {
     let template = {
       home: "text-azure bg-titanium border-r-azure border-r-4",
       myClassroom: "text-gray-600",
-      createClassroom: "text-gray-600",
+      joinClassroom: "text-gray-600",
       userSetting: "text-gray-600",
       signout: "text-gray-600",
     };
@@ -112,11 +112,11 @@ export default function ClassroomNavbar() {
               <span className="ml-3">ห้องเรียนของฉัน</span>
             </button>
             <button
-              onClick={() => handleMenuClick("createClassroom")}
-              className={`grid grid-cols-[20px_1fr] transition-all	text-xl  px-10 py-6 text-left font-kanit ${menuStyle.createClassroom}`}
+              onClick={() => handleMenuClick("joinClassroom")}
+              className={`grid grid-cols-[20px_1fr] transition-all	text-xl  px-10 py-6 text-left font-kanit ${menuStyle.joinClassroom}`}
             >
               <AddCircleOutlineIcon />
-              <span className="ml-3">สร้างห้องเรียนใหม่</span>
+              <span className="ml-3">เข้าร่วมห้องเรียน</span>
             </button>
             <button
               onClick={() => handleMenuClick("userSetting")}

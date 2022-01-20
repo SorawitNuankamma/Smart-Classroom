@@ -44,6 +44,7 @@ import ClassroomAllContentsPage from "./routes/classroomApp/classroom/classroom-
 import ClassroomContentPage from "./routes/classroomApp/classroom/classroom-content-page";
 import ClassroomCreateContentPage from "./routes/classroomApp/classroom/classroom-create-content-page";
 import ClassroomSubmitAssignmentPage from "./routes/classroomApp/classroom/classroom-submit-assignment-page";
+import JoinClassroom from "./routes/classroomApp/join-classroom-page";
 /*
 <Route path="/" element={<Navbar />}>
           <Route path="" element={<Frontpage />} />
@@ -75,6 +76,7 @@ function App() {
             element={<CreateClassroomPage />}
           ></Route>
           <Route path="my-classroom" element={<MyClassroomPage />}></Route>
+          <Route path="join-classroom" element={<JoinClassroom />}></Route>
           <Route path="my-classroom/:classroomId" element={<ClassroomPage />}>
             <Route index element={<ClassroomMainPage />} />
             <Route

@@ -50,6 +50,11 @@ export default function AuthenResult() {
     async function initial() {
       let res = await getLineToken(searchParams.get("code"));
       window.sessionStorage.lineToken = res.access_token;
+      //DEVELOPMENT ONLY
+      if (searchParams.get("code") === "QWERTY") {
+        window.sessionStorage.lineToken = "ASDFGH";
+      }
+      //DEVELOPMENT ONLY END
 
       if (state.app.currentOperation === "login") {
         res = await lineUserLogin();

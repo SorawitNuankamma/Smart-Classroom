@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-  currentUser: "nam",
+  currentUser: "none",
+  currentClassroomRole: "none",
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -8,6 +9,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser: action.payload,
+      };
+    case "SET_CURRENT_CLASSROOM_ROLE":
+      return {
+        ...state,
+        currentClassroomRole: action.payload,
       };
 
     default:

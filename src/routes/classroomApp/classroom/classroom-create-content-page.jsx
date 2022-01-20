@@ -17,6 +17,12 @@ const ifAssignment = {
   assignment: true,
 };
 
+const titleDict = {
+  annoucement: "สร้างประกาศ",
+  lesson: "สร้างบทเรียน",
+  assignment: "สร้างแบบฝึกหัด",
+};
+
 export default function ClassroomCreateContentPage(props) {
   const [renderState, setRenderState] = useState(false);
   const [contentTitle, setContentTitle] = useState("");
@@ -37,6 +43,7 @@ export default function ClassroomCreateContentPage(props) {
         {
           userId: state.user.currentUser.id,
           username: state.user.currentUser.name,
+          pictureURL: state.user.currentUser.pictureURL,
           dateWriteAt: Date(),
         },
       ],
@@ -84,6 +91,7 @@ export default function ClassroomCreateContentPage(props) {
 
   // ComponentDidUpdate
   useEffect(() => {
+    // Check User roles
     async function onEditorChange() {
       setEditorHtml(draftToHtml(convertToRaw(editorState.getCurrentContent())));
       setRenderState(!renderState);
@@ -107,9 +115,7 @@ export default function ClassroomCreateContentPage(props) {
         กลับไปหน้าที่แล้ว
       </div>
       <div className="mt-8 font-kanit">
-        <span className="text-4xl text-gray-600 ">
-          {action} {props.type}
-        </span>
+        <span className="text-4xl text-gray-600 ">{titleDict[props.type]}</span>
         <label className="block mt-8">
           <span className="text-gray-700">ชื่อบทความ</span>
           <input
@@ -178,7 +184,7 @@ export default function ClassroomCreateContentPage(props) {
             className="bg-sky-500 px-5 py-3 text-white rounded-md text-lg shadow-md"
             onClick={handleContentSubmit}
           >
-            {action} {props.type}
+            {titleDict[props.type]}
           </button>
         </div>
       </div>

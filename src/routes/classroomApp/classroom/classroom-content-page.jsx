@@ -15,12 +15,15 @@ import Divider from "@mui/material/Divider";
 
 //Component
 import ClassroomMenuButton from "../../../components/classroomMenuButton";
+import FilePicker from "../../../components/filePicker";
 
 //Service
 const classroomService = require("../../../services/classroom");
 const contentService = require("../../../services/content");
 
 export default function ClassroomContentPage() {
+  const state = useSelector((state) => state);
+
   const [content, setContent] = useState([]);
   const [contentBody, setContentBody] = useState("");
 
@@ -33,21 +36,6 @@ export default function ClassroomContentPage() {
     reader.onloadend = () => {
       setSelectedFile(fileInput.current.files[0]);
     };
-  };
-
-  //Filestack dependencies
-  const client = filestack.init(`ABXuU7bayRkeVh8mmyNAAz`);
-  const options = {
-    onFileSelected: (file) => {
-      // If you throw any error in this function it will reject the file selection.
-      // The error message will be displayed to the user as an alert.
-      if (file.size > 20000 * 1000) {
-        throw new Error("ไม่สามารถรองรับไฟล์ที่มีขนาดเกิน 20MB ได้");
-      }
-    },
-    onFileUploadFinished: (fileMeta) => {
-      console.log(fileMeta);
-    },
   };
 
   const navigate = useNavigate();
@@ -94,36 +82,30 @@ export default function ClassroomContentPage() {
         <ArrowBackIosIcon />
         กลับไปหน้าที่แล้ว
       </div>
-      <div className="mt-8 font-kanit grid grid-cols-[1fr_50px] w-fit ">
-        <span className="text-4xl text-gray-600 ">{content.title}</span>
-        <button
-          onClick={() => {
-            navigate(`edit`);
-          }}
-        >
-          <ModeEditIcon fontSize="large" />
-        </button>
+      <div className="mt-8 font-kanit flex flex-row w-fit space-x-3 text-gray-600 ">
+        <span className="text-4xl  ">{content.title}</span>
+        {state.user.currentClassroomRole !== "student" && (
+          <button
+            className="text-azure"
+            onClick={() => {
+              navigate(`edit`);
+            }}
+          >
+            <ModeEditIcon fontSize="large" />
+          </button>
+        )}
       </div>
+      <span className="block mt-2 text-gray-400 text-sm">
+        ถูกสร้างขึ้นเมื่อ {content.createDate}
+      </span>
       <div className=" max-w-6xl mt-5">
         <Divider />
       </div>
-      <div className="mt-8 font-kanit">{contentBody}</div>
-
-      {content.type === "assignment" && (
-        <>
-          <div className="mt-8 font-kanit">
-            <span className="text-3xl text-gray-600 ">Submit Assignment</span>
-          </div>
-          <button
-            className="bg-skyblue px-10 py-5 text-white rounded-md"
-            onClick={() => {
-              client.picker(options).open();
-            }}
-          >
-            Selected File
-          </button>
-        </>
-      )}
+      <div className="mt-8 font-kanit min-h-[20rem]">{contentBody}</div>
+      <div className=" max-w-6xl mt-5">
+        <Divider />
+      </div>
+      {content.type === "assignment" && <FilePicker />}
     </div>
   );
 }

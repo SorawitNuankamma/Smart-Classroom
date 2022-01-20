@@ -47,15 +47,8 @@ export default function CreateClassroomPage() {
       timetable: timeIntervals,
     };
     let res = await classroomService.postClassroom(classroomObject);
-    if (res.status === "fail") {
-      setCurrentAlert({
-        type: "error",
-        title: "ข้อผิดพลาด",
-        message: "มีข้อผิดพลาดเกิดขึ้น โปรดลองภายหลัง",
-        link: null,
-      });
-      //navigate("/home/error");
-    } else {
+    console.log(res);
+    if (res.status === "success") {
       console.log(res);
       setCurrentAlert({
         type: "success",
@@ -63,13 +56,15 @@ export default function CreateClassroomPage() {
         message: "สร้างห้องเรียนใหม่สำเร็จ",
         link: null,
       });
-      /*
-      window.localStorage.setItem(
-        "newClassroom",
-        JSON.stringify(res.data.newClassroom.id)
-      );
-      navigate("/home/createClassroomSuccessful");
-      */
+
+      //navigate("/home/error");
+    } else {
+      setCurrentAlert({
+        type: "error",
+        title: "ข้อผิดพลาด",
+        message: "มีข้อผิดพลาดเกิดขึ้น โปรดลองภายหลัง",
+        link: null,
+      });
     }
   };
 
@@ -93,10 +88,10 @@ export default function CreateClassroomPage() {
         className={`transition-all duration-500 flex flex-col ${initState} w-fit`}
       >
         <div className="m-12 space-y-4 font-kanit w-fit">
-          <span className="text-5xl text-gray-600 ">Create A Classroom</span>
+          <span className="text-5xl text-gray-600 ">สร้างห้องเรียนใหม่</span>
           <div className="">
             <label className="block mt-8">
-              <span className="text-gray-700">Classroom name</span>
+              <span className="text-gray-700">ชื่อห้องเรียน</span>
               <input
                 type="text"
                 className="
@@ -115,7 +110,7 @@ export default function CreateClassroomPage() {
               ></input>
             </label>
             <label className="block mt-8">
-              <span className="text-gray-700">Classroom Description</span>
+              <span className="text-gray-700">คำอธิบายห้องเรียนเบื้องต้น</span>
               <textarea
                 className="
                     mt-1
@@ -135,7 +130,7 @@ export default function CreateClassroomPage() {
               ></textarea>
             </label>
             <label className="block mt-8">
-              <span className="text-gray-700">Classroom Rules</span>
+              <span className="text-gray-700">กฎของห้องเรียน</span>
               <textarea
                 className="
                     mt-1

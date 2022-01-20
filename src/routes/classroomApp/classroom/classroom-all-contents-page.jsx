@@ -2,11 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../../components/button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+
+//Redux
+import { useSelector } from "react-redux";
 
 //Service
 const contentService = require("../../../services/content");
 
 export default function ClassroomAllContentsPage(props) {
+  const state = useSelector((state) => state);
   const [contents, setContents] = useState([]);
 
   const navigate = useNavigate();
@@ -20,7 +25,7 @@ export default function ClassroomAllContentsPage(props) {
         classId: params.classroomId,
         type: props.type,
       });
-      console.log(res);
+
       setContents(res.data.contents);
     }
     initial();
@@ -48,10 +53,25 @@ export default function ClassroomAllContentsPage(props) {
         <ArrowBackIosIcon />
         กลับไปหน้าที่แล้ว
       </div>
-      <div className="mt-8 font-kanit">
+      <div className="mt-8 font-kanit flex flex-row items-center">
         <span className="text-4xl text-gray-600 ">{typeDict[props.type]}</span>
+        {state.user.currentClassroomRole !== "student" && (
+          <button
+            className="ml-5 text-azure"
+            onClick={() => {
+              navigate(`../${props.createPath}`);
+            }}
+          >
+            <AddCircleOutlineIcon fontSize="large" />
+          </button>
+        )}
       </div>
-      <div className="mt-8 grid gap-4 grid-cols-1 md:grid-cols-2 desktop:grid-cols-3 font-kanit">
+      <div className="mt-8 grid gap-4 grid-cols-1 md:grid-cols-2 desktop:grid-cols-3 font-kanit w-fit">
+        {contents === [] && (
+          <div className="px-5 py-3 w-64 h-32 cursor-pointer rounded-md  bg-gray-200 shadow-md animate-pulse">
+            <span className="block text-2xl text-gray-600">Loading</span>
+          </div>
+        )}
         {contents.map((el, index) => (
           <div
             key={index}
@@ -69,11 +89,6 @@ export default function ClassroomAllContentsPage(props) {
           </div>
         ))}
       </div>
-      <Button
-        text={`Create New ${props.type}`}
-        type="small"
-        path={`../${props.createPath}`}
-      />
     </div>
   );
 }

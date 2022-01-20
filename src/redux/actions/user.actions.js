@@ -4,3 +4,10 @@ export const setCurrentUser = (user) => {
     payload: user,
   };
 };
+
+export const setCurrentClassroomRole = (role) => {
+  return {
+    type: "SET_CURRENT_CLASSROOM_ROLE",
+    payload: role,
+  };
+};

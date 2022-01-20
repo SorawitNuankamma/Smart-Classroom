@@ -48,6 +48,18 @@ export default function LoginLine() {
       >
         <span>สมัครสมาชิกใหม่</span>
       </button>
+      {
+        //DEVELOPMENT ONLY
+        <button
+          className="text-red-500 text-2xl"
+          onClick={() => {
+            navigate(`result?code=QWERTY`);
+          }}
+        >
+          LOGIN AS FAKEUSER
+        </button>
+        //DEVELOPMENT ONLY END
+      }
     </div>
   );
 }
