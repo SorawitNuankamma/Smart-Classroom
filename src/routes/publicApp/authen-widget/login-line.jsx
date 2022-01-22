@@ -50,14 +50,24 @@ export default function LoginLine() {
       </button>
       {
         //DEVELOPMENT ONLY
-        <button
-          className="text-red-500 text-2xl"
-          onClick={() => {
-            navigate(`result?code=QWERTY`);
-          }}
-        >
-          LOGIN AS FAKEUSER
-        </button>
+        <>
+          <button
+            className="text-red-500 text-2xl"
+            onClick={() => {
+              navigate(`result?code=QWERTY`);
+            }}
+          >
+            LOGIN AS FAKEUSER
+          </button>
+          <button
+            className="text-red-500 text-2xl"
+            onClick={() => {
+              navigate(`result?code=YUIOP`);
+            }}
+          >
+            LOGIN AS FAKEUSER2
+          </button>
+        </>
         //DEVELOPMENT ONLY END
       }
     </div>

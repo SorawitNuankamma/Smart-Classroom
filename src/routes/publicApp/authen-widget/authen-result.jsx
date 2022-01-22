@@ -54,6 +54,9 @@ export default function AuthenResult() {
       if (searchParams.get("code") === "QWERTY") {
         window.sessionStorage.lineToken = "ASDFGH";
       }
+      if (searchParams.get("code") === "YUIOP") {
+        window.sessionStorage.lineToken = "XQEXN";
+      }
       //DEVELOPMENT ONLY END
 
       if (state.app.currentOperation === "login") {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import * as filestack from "filestack-js";
+import FileElement from "./fileElement";
 
 import "../styles/colors.css";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -10,11 +11,26 @@ import { postFile, getFiles, patchFile } from "../services/file";
 
 import { useSelector } from "react-redux";
 
+const DICT = {
+  student: {
+    title: "ส่งงานที่ได้รับมอบหมาย",
+    description: `ไฟล์ที่ถูก upload ขึ้นมาจะถือว่าเป็นการส่งงาน
+            นักเรียนสามารถยกเลิกส่งงานได้โดยการคลิกลบไฟล์ในช่องการส่งงานด้านล่าง`,
+    isStudent: true,
+  },
+  teacher: {
+    title: "แนบไฟล์กับตัวบทความ",
+    description: `ไฟล์ที่ถูก upload ขึ้นมาจะถูกแสดงร่วมกับตัวบทความ`,
+    isStudent: false,
+  },
+};
+
 export default function FilePicker(props) {
   const state = useSelector((state) => state);
 
   const [render, setRender] = useState(false);
   const [submission, setSubmission] = useState();
+  const [isSubmission, setIsSubmission] = useState(false);
   const [submissionFiles, setSubmissionFiles] = useState([]);
 
   let params = useParams();
@@ -31,6 +47,7 @@ export default function FilePicker(props) {
     },
     onFileUploadFinished: async (fileMeta) => {
       console.log(fileMeta);
+      console.log(submission);
       const fileSave = {
         filename: fileMeta.filename,
         fileStackHandle: fileMeta.handle,
@@ -41,7 +58,9 @@ export default function FilePicker(props) {
         contentId: params.contentId,
         submissionId: submission.id,
       };
+      console.log(fileSave);
       const res = await postFile(fileSave);
+      console.log(res);
       let tempSubmissionFiles = submissionFiles;
       tempSubmissionFiles.push(res.data.newFile);
       setSubmissionFiles(tempSubmissionFiles);
@@ -53,8 +72,10 @@ export default function FilePicker(props) {
   // TODO if there are none file in submission yet, create submission on db and use it
   useEffect(() => {
     async function initial() {
+      console.log(submission);
       const res = await getMySubmission({ contentId: params.contentId });
       if (res.status === "success") {
+        setIsSubmission(true);
         setSubmission(res.data.submission);
         // Fetch file that belong to this submission
         const filesRes = await getFiles({
@@ -63,6 +84,7 @@ export default function FilePicker(props) {
         });
         if (filesRes.status === "success") {
           setSubmissionFiles(filesRes.data.files);
+          console.log(submission);
         }
       }
     }
@@ -81,10 +103,14 @@ export default function FilePicker(props) {
   const handleCreateSubmission = async () => {
     const res = await postSubmission({
       userId: state.user.currentUser.id,
+      classroomId: params.classroomId,
       contentId: params.contentId,
       isStudent: true,
     });
-    setSubmission(res.data.submission);
+    console.log(res);
+    setSubmission(res.data.newSubmission);
+    setIsSubmission(true);
+    setRender(!render);
   };
 
   const handleFileDownload = (file) => {
@@ -112,7 +138,7 @@ export default function FilePicker(props) {
       <span className="block text-2xl text-gray-600">
         ส่งงานที่ได้รับมอบหมาย
       </span>
-      {!submission && (
+      {!isSubmission && (
         <>
           <span className="block mt-2 text-gray-400 text-sm">
             หากยังไม่มีการส่งงาน สามารถสร้างช่องทางการส่งงานได้ด้านล่าง
@@ -125,7 +151,7 @@ export default function FilePicker(props) {
           </button>
         </>
       )}
-      {submission && (
+      {isSubmission && (
         <>
           <span className="block mt-2 text-gray-400 text-sm">
             ไฟล์ที่ถูก upload ขึ้นมาจะถือว่าเป็นการส่งงาน
@@ -133,27 +159,17 @@ export default function FilePicker(props) {
           </span>
           <div className="mt-5 bg-gray-50 min-h-[10rem] max-w-[45rem] py-1">
             {submissionFiles.map((el, index) => (
-              <div
+              <FileElement
                 key={index}
-                className="ml-3 mt-3 px-3 py-1 border-2 border-skyblue bg-white w-fit rounded-2xl flex flex-row items-center"
-              >
-                <button
-                  className="text-gray-600 hover:text-skyblue"
-                  onClick={() => {
-                    handleFileDownload(el);
-                  }}
-                >
-                  {el.filename}
-                </button>
-                <button
-                  className="text-gray-600 hover:text-red-500 ml-2"
-                  onClick={() => {
-                    handleFileDelete(el, index);
-                  }}
-                >
-                  <ClearIcon />
-                </button>
-              </div>
+                index={index}
+                el={el}
+                onSuccess={() => {
+                  let tempSubmissionFiles = submissionFiles;
+                  tempSubmissionFiles.splice(index, 1);
+                  setSubmissionFiles(tempSubmissionFiles);
+                  setRender(!render);
+                }}
+              />
             ))}
           </div>
           <div className="mt-5 mb-5">

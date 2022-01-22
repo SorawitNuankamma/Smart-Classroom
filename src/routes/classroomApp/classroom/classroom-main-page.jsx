@@ -12,6 +12,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import SettingsIcon from "@mui/icons-material/Settings";
+import PersonIcon from "@mui/icons-material/Person";
 
 //REDUX
 import { useSelector } from "react-redux";
@@ -67,6 +68,17 @@ export default function ClassroomMainPage() {
           <div
             className="bg-iron cursor-pointer text-gray-600 text-xl w-[20rem] py-5 px-5 rounded-md shadow-md mt-4 grid grid-cols-[25px_1fr] items-center"
             onClick={() => {
+              handleRouting(`classroom-my-profile`);
+            }}
+          >
+            <span className="text-azure">
+              <PersonIcon />
+            </span>
+            <span className="ml-3">ข้อมูลของฉันในห้องเรียน</span>
+          </div>
+          <div
+            className="bg-iron cursor-pointer text-gray-600 text-xl w-[20rem] py-5 px-5 rounded-md shadow-md mt-4 grid grid-cols-[25px_1fr] items-center"
+            onClick={() => {
               handleRouting(`classroom-annoucement`);
             }}
           >
@@ -98,13 +110,13 @@ export default function ClassroomMainPage() {
             <span className="ml-3">แบบฝึกหัด</span>
           </div>
         </div>
-        {state.user.currentClassroomRole !== "student" && (
+        {state.user.currentClassroomRole !== "Student" && (
           <div className="ml-12 mt-8 font-kanit">
             <span className="text-xl text-gray-600">เมนูอาจารย์ผู้สอน</span>
             <div
               className="bg-iron cursor-pointer text-gray-600 text-xl w-[20rem] py-5 px-5 rounded-md shadow-md mt-4 grid grid-cols-[25px_1fr] items-center"
               onClick={() => {
-                handleRouting(`classroom-assignment`);
+                handleRouting(`classroom-members`);
               }}
             >
               <span className="text-azure">
@@ -125,7 +137,7 @@ export default function ClassroomMainPage() {
             </div>
           </div>
         )}
-        {state.user.currentClassroomRole === "owner" && (
+        {state.user.currentClassroomRole === "Owner" && (
           <div className="ml-12 mt-8 font-kanit">
             <span className="text-xl text-gray-600">เมนูผู้ดูแลห้องเรียน</span>
             <div

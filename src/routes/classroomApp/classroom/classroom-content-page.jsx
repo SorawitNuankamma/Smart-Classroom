@@ -12,6 +12,7 @@ import parse from "html-react-parser";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Divider from "@mui/material/Divider";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
 
 //Component
 import ClassroomMenuButton from "../../../components/classroomMenuButton";
@@ -85,14 +86,24 @@ export default function ClassroomContentPage() {
       <div className="mt-8 font-kanit flex flex-row w-fit space-x-3 text-gray-600 ">
         <span className="text-4xl  ">{content.title}</span>
         {state.user.currentClassroomRole !== "student" && (
-          <button
-            className="text-azure"
-            onClick={() => {
-              navigate(`edit`);
-            }}
-          >
-            <ModeEditIcon fontSize="large" />
-          </button>
+          <>
+            <button
+              className="text-azure hover:text-blue-500 "
+              onClick={() => {
+                navigate(`edit`);
+              }}
+            >
+              <ModeEditIcon fontSize="large" />
+            </button>
+            <button
+              className="text-azure hover:text-blue-500 "
+              onClick={() => {
+                navigate(`submitted-files`);
+              }}
+            >
+              <Inventory2Icon fontSize="large" />
+            </button>
+          </>
         )}
       </div>
       <span className="block mt-2 text-gray-400 text-sm">

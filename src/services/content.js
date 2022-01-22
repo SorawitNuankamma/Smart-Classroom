@@ -34,7 +34,7 @@ exports.getContents = async (filterObj) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `http://localhost:5000/api/contents?${searchParams}`,
+    `http://localhost:5000/api/contents?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin

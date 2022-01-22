@@ -12,6 +12,21 @@ exports.postClassroom = async (data) => {
   return response.json(); // parses JSON response into native JavaScript objects
 };
 
+exports.patchClassroom = async (data, id) => {
+  // TODO get token from localStorage
+  const token = window.sessionStorage.accessToken;
+  const response = await fetch(`http://localhost:5000/api/classrooms/${id}`, {
+    method: "PATCH", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+};
+
 exports.joinClassroom = async (data) => {
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
@@ -45,10 +60,6 @@ exports.getClassroom = async (id) => {
 exports.getClassrooms = async (filterObj) => {
   let searchParams = new URLSearchParams(filterObj);
 
-  console.log(
-    `http://localhost:5000/api/classrooms?${searchParams.toString()}`
-  );
-
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
     `http://localhost:5000/api/classrooms?${searchParams.toString()}`,
@@ -68,6 +79,24 @@ exports.getMyClassrooms = async () => {
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
     `http://localhost:5000/api/classrooms/getMyClassroom`,
+    {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  return response.json(); // parses JSON response into native JavaScript objects
+};
+
+exports.getMemberInfo = async (filterObj) => {
+  let searchParams = new URLSearchParams(filterObj);
+
+  const token = window.sessionStorage.accessToken;
+  const response = await fetch(
+    `http://localhost:5000/api/classrooms/getMemberInfo?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
