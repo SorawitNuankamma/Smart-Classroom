@@ -12,15 +12,13 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { useSelector } from "react-redux";
 
 //Service
-const contentService = require("../../../services/content");
-
-//Service
-const classroomService = require("../../../services/classroom");
+import { getMemberInfo } from "../../../services/classroom";
 
 export default function ClassroomMemberPage(props) {
   const state = useSelector((state) => state);
   const [submissions, setSubmissions] = useState();
   const [user, setUser] = useState({});
+  const [pathBack, setPathBack] = useState(`../classroom-members`);
 
   const navigate = useNavigate();
   let params = useParams();
@@ -28,9 +26,14 @@ export default function ClassroomMemberPage(props) {
   // ComponentDidMount
   useEffect(() => {
     async function initial() {
+      let userId = params.userId;
+      if (props.self) {
+        userId = state.user.currentUser.id;
+        setPathBack(`../`);
+      }
       // Fetch classroom
-      const res = await classroomService.getMemberInfo({
-        userId: params.userId,
+      const res = await getMemberInfo({
+        userId: userId,
         classroomId: params.classroomId,
       });
       console.log(res);
@@ -47,7 +50,7 @@ export default function ClassroomMemberPage(props) {
       <div
         className="mt-8 font-kanit text-blue-400 hover:text-blue-600 cursor-pointer"
         onClick={() => {
-          navigate(`../classroom-members`);
+          navigate(pathBack);
         }}
       >
         <ArrowBackIosIcon />
@@ -55,12 +58,7 @@ export default function ClassroomMemberPage(props) {
       </div>
       <div className="mt-8 font-kanit flex flex-row items-center">
         <span className="text-4xl text-gray-600 ">ข้อมูลของ {user.name}</span>
-        <button
-          className="ml-5 text-azure"
-          onClick={() => {
-            navigate(``);
-          }}
-        >
+        <button className="ml-5 text-azure" onClick={() => {}}>
           <ModeEditIcon fontSize="large" />
         </button>
       </div>

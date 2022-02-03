@@ -26,6 +26,8 @@ import JoinClassroom from "./routes/classroomApp/join-classroom-page";
 import ClassroomSubmittedFilesPage from "./routes/classroomApp/classroom/classroom-submitted-files-page";
 import ClassroomAllMembersPage from "./routes/classroomApp/classroom/classroom-all-members-page";
 import ClassroomMemberPage from "./routes/classroomApp/classroom/classroom-member-page";
+import ClassroomScoreBoardPage from "./routes/classroomApp/classroom/classroom-scoreboard-page";
+import ClassroomSettingPage from "./routes/classroomApp/classroom/classroom-setting-page";
 
 function App() {
   return (
@@ -56,8 +58,16 @@ function App() {
               element={<ClassroomInfoPage />}
             />
             <Route
+              path="classroom-setting"
+              element={<ClassroomSettingPage />}
+            />
+            <Route
               path="classroom-members"
               element={<ClassroomAllMembersPage />}
+            />
+            <Route
+              path="classroom-scoreboard"
+              element={<ClassroomScoreBoardPage />}
             />
             <Route
               path="classroom-members/:userId"

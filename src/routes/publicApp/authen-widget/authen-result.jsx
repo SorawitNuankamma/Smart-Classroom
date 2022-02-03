@@ -7,6 +7,9 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../../redux/root-action";
 import { useSelector } from "react-redux";
 
+import Avatar from "@mui/material/Avatar";
+import Skeleton from "@mui/material/Skeleton";
+
 //Service
 import {
   getLineToken,
@@ -18,8 +21,7 @@ import {
 export default function AuthenResult() {
   const state = useSelector((state) => state);
 
-  const [user, setUser] = useState({});
-
+  const [isLoad, setIsLoad] = useState(false);
   const [searchParams] = useSearchParams();
   //Redux
   const dispatch = useDispatch();
@@ -60,38 +62,61 @@ export default function AuthenResult() {
       //DEVELOPMENT ONLY END
 
       if (state.app.currentOperation === "login") {
-        res = await lineUserLogin();
-        if (res.status === "fail") {
+        try {
+          res = await lineUserLogin();
+          if (res.status === "fail") {
+            navigate(`..`);
+            return;
+          }
+          setIsLoad(true);
+          // Successfully login
+          setCurrentAlert({
+            type: "success",
+            title: "สำเร็จ",
+            message: "เข้าสู่ระบบสำเร็จ",
+            link: null,
+          });
+          setCurrentUser(res.data.user);
+          window.sessionStorage.accessToken = res.token;
+          res = await isLogin();
+        } catch (e) {
+          setCurrentAlert({
+            type: "error",
+            title: "ล้มเหลว",
+            message: "เข้าสู่ระบบไม่สำเร็จ",
+            link: null,
+          });
           navigate(`..`);
-          return;
         }
-        // Successfully login
-        setCurrentAlert({
-          type: "success",
-          title: "สำเร็จ",
-          message: "เข้าสู่ระบบสำเร็จ",
-          link: null,
-        });
-        setCurrentUser(res.data.user);
-        window.sessionStorage.accessToken = res.token;
-        res = await isLogin();
       } else if (state.app.currentOperation === "signup") {
-        res = await lineUserSignUp();
-        if (res.status === "fail") {
+        try {
+          res = await lineUserSignUp();
+          if (res.status === "fail" || !res) {
+            console.log("failed to fetch");
+            navigate(`../../`);
+            return;
+          }
+          // Successfully signup
+          setCurrentAlert({
+            type: "success",
+            title: "สำเร็จ",
+            message: "สมัครสมาชิกสำเร็จ",
+            link: null,
+          });
+          setCurrentUser(res.data.user);
+          window.sessionStorage.accessToken = res.token;
+          res = await isLogin();
+        } catch (e) {
+          setCurrentAlert({
+            type: "error",
+            title: "ล้มเหลว",
+            message: "เข้าสู่ระบบไม่สำเร็จ",
+            link: null,
+          });
           navigate(`..`);
-          return;
         }
-        // Successfully signup
-        setCurrentAlert({
-          type: "success",
-          title: "สำเร็จ",
-          message: "สมัครสมาชิกสำเร็จ",
-          link: null,
-        });
-        setCurrentUser(res.data.user);
-        window.sessionStorage.accessToken = res.token;
-        res = await isLogin();
       } else {
+        console.log("error");
         navigate(`..`);
       }
     }
@@ -101,33 +126,46 @@ export default function AuthenResult() {
   const navigate = useNavigate();
 
   return (
-    <div className="grid justify-center p-10 sm:shadow-md sm:rounded-lg landing-animation-right  ">
-      <span className="block text-4xl  mb-10 text-darkcloud font-kanit text-center">
-        {authenText[state.app.currentOperation].title}
-      </span>
-      <div className="relative h-52">
-        <img
-          src={state.user.currentUser.pictureURL}
-          alt=""
-          className="absolute"
-        />
-      </div>
-      {state.app.currentOperation === "signup" ? (
-        <label className="font-kanit mt-10">
-          <Checkbox />
-          ตกลงตามข้อกำหนดและเงื่อนไข
-        </label>
-      ) : null}
-
-      <button
-        className="bg-skyblue text-white mt-5 px-7 py-4 text-xl font-kanit rounded-md"
-        onClick={() => {
-          setCurrentMenu("home");
-          navigate("/app");
-        }}
-      >
-        <span>{authenText[state.app.currentOperation].button}</span>
-      </button>
+    <div className="w-[400px] h-[600px] py-10 grid justify-center sm:shadow-md sm:rounded-lg landing-animation-right  ">
+      {isLoad && (
+        <>
+          <span className="block text-4xl  mb-10 text-darkcloud font-kanit text-center">
+            {authenText[state.app.currentOperation].title}
+          </span>
+          <div className="relative h-52 grid items-center justify-center">
+            <Avatar
+              alt="User profile pic"
+              src={state.user.currentUser.pictureURL}
+              sx={{ width: 170, height: 170 }}
+            />
+          </div>
+          {state.app.currentOperation === "signup" ? (
+            <label className="font-kanit mt-10">
+              <Checkbox />
+              ตกลงตามข้อกำหนดและเงื่อนไข
+            </label>
+          ) : null}
+          <button
+            className="bg-skyblue text-white mt-5 px-7 text-xl font-kanit rounded-md"
+            onClick={() => {
+              setCurrentMenu("home");
+              navigate("/app");
+            }}
+          >
+            <span>{authenText[state.app.currentOperation].button}</span>
+          </button>
+        </>
+      )}
+      {!isLoad && (
+        <>
+          <span className="block text-4xl  mb-10 text-darkcloud font-kanit text-center">
+            <Skeleton variant="text" />
+          </span>
+          <div className="relative h-52 grid items-center justify-center">
+            <Skeleton variant="circular" width={170} height={170} />
+          </div>
+        </>
+      )}
     </div>
   );
 }

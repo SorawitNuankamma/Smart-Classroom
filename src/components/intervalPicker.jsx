@@ -41,7 +41,7 @@ export default function IntervalPicker(props) {
 
   return (
     <div className="mt-8">
-      <span className="text-lg">Set Time Schedule</span>
+      <span className="text-lg">Set Class Schedule</span>
       <div className="mt-3">
         <div>
           <span>Day</span>

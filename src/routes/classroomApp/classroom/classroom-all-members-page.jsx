@@ -82,7 +82,7 @@ export default function ClassroomAllMembersPage(props) {
         return {
           name: {
             value: el.name,
-            link: `${el.userId}`,
+            path: `${el.userId}`,
           },
           code: {
             value: el.code,

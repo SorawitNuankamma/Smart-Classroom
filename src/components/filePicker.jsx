@@ -7,9 +7,9 @@ import "../styles/colors.css";
 import ClearIcon from "@mui/icons-material/Clear";
 
 import { postSubmission, getMySubmission } from "../services/submission";
-import { postFile, getFiles, patchFile } from "../services/file";
-
 import { useSelector } from "react-redux";
+
+import { postFile, getFiles } from "../services/file";
 
 const DICT = {
   student: {
@@ -110,26 +110,6 @@ export default function FilePicker(props) {
     console.log(res);
     setSubmission(res.data.newSubmission);
     setIsSubmission(true);
-    setRender(!render);
-  };
-
-  const handleFileDownload = (file) => {
-    window.open(`https://cdn.filestackcontent.com/${file.fileStackHandle}`);
-  };
-
-  const handleFileDelete = async (file, index) => {
-    //TODO Delete file on filestack
-    //Delete file on mongoDB
-    let res = await patchFile(
-      {
-        isDeleted: true,
-      },
-      `${file.id}`
-    );
-    //Delete file in state
-    let tempSubmissionFiles = submissionFiles;
-    tempSubmissionFiles.splice(index, 1);
-    setSubmissionFiles(tempSubmissionFiles);
     setRender(!render);
   };
 

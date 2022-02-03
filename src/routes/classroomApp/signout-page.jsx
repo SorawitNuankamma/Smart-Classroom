@@ -9,8 +9,7 @@ import { actionCreators } from "../../redux/root-action";
 import { useSelector } from "react-redux";
 
 //Service
-const auth = require("../../services/authentication");
-//const userService = require("../services/user");
+import { isLogin } from "../../services/authentication";
 
 export default function SignOutPage() {
   const [user, setUser] = useState({
@@ -31,7 +30,7 @@ export default function SignOutPage() {
     async function initial() {
       try {
         console.log("wtf");
-        await auth.isLogin();
+        await isLogin();
         //const res = await userService.getMyUser();
         //setUser(res.data.user);
         // Initial Animation

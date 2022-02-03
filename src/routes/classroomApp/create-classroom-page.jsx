@@ -17,8 +17,8 @@ import { actionCreators } from "../../redux/root-action";
 import { useSelector } from "react-redux";
 
 //Service
-const auth = require("../../services/authentication");
-const classroomService = require("../../services/classroom");
+import { isLogin } from "../../services/authentication";
+import { postClassroom } from "../../services/classroom";
 
 export default function CreateClassroomPage() {
   // UI State
@@ -46,7 +46,7 @@ export default function CreateClassroomPage() {
       rules: ruleField,
       timetable: timeIntervals,
     };
-    let res = await classroomService.postClassroom(classroomObject);
+    let res = await postClassroom(classroomObject);
     console.log(res);
     if (res.status === "success") {
       console.log(res);
@@ -72,7 +72,7 @@ export default function CreateClassroomPage() {
   useEffect(() => {
     async function initial() {
       try {
-        await auth.isLogin();
+        await isLogin();
         // Initial Animation
         setInitState("opacity-100 translate-x-0");
       } catch {

@@ -94,7 +94,7 @@ export default function EditField(props) {
       )}
       {!isOnEdit && (
         <div className="max-w-96">
-          <span className="text-lg font-kanit">{text}</span>
+          <span className="">{text}</span>
           {props.editEnable && (
             <button
               className="ml-3 text-azure"
@@ -102,7 +102,7 @@ export default function EditField(props) {
                 setIsOnEdit(true);
               }}
             >
-              <EditIcon fontSize="large" />
+              <EditIcon />
             </button>
           )}
         </div>

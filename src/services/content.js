@@ -1,40 +1,46 @@
-exports.postContent = async (data) => {
+const postContent = async (data) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
-  const response = await fetch("http://localhost:5000/api/contents/", {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
+  const response = await fetch(
+    "https://smartclassroomservice.azurewebsites.net/api/contents/",
+    {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    }
+  );
   return response.json(); // parses JSON response into native JavaScript objects
 };
 
-exports.patchContent = async (data, id) => {
+const patchContent = async (data, id) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
-  const response = await fetch(`http://localhost:5000/api/contents/${id}`, {
-    method: "PATCH", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
+  const response = await fetch(
+    `https://smartclassroomservice.azurewebsites.net/api/contents/${id}`,
+    {
+      method: "PATCH", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    }
+  );
   return response.json(); // parses JSON response into native JavaScript objects
 };
 
-exports.getContents = async (filterObj) => {
+const getContents = async (filterObj) => {
   let searchParams = new URLSearchParams(filterObj);
 
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `http://localhost:5000/api/contents?${searchParams.toString()}`,
+    `https://smartclassroomservice.azurewebsites.net/api/contents?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -47,16 +53,21 @@ exports.getContents = async (filterObj) => {
   return response.json(); // parses JSON response into native JavaScript objects
 };
 
-exports.getContent = async (id) => {
+const getContent = async (id) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
-  const response = await fetch(`http://localhost:5000/api/contents/${id}`, {
-    method: "GET", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  });
+  const response = await fetch(
+    `https://smartclassroomservice.azurewebsites.net/api/contents/${id}`,
+    {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
   return response.json(); // parses JSON response into native JavaScript objects
 };
+
+export { postContent, patchContent, getContent, getContents };

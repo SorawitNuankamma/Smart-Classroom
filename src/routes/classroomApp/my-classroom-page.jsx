@@ -12,13 +12,13 @@ import { actionCreators } from "../../redux/root-action";
 import { useSelector } from "react-redux";
 
 //Service
-const auth = require("../../services/authentication");
-const classroomService = require("../../services/classroom");
+import { isLogin } from "../../services/authentication";
+import { getMyClassrooms } from "../../services/classroom";
 
 export default function MyClassroomPage() {
   const state = useSelector((state) => state);
 
-  const [initState, setInitState] = useState("opacity-0	translate-x-10	");
+  const [initState, setInitState] = useState("opacity-0	translate-x-0	");
   const [classrooms, setClassrooms] = useState([]);
 
   const navigate = useNavigate();
@@ -33,8 +33,8 @@ export default function MyClassroomPage() {
   useEffect(() => {
     async function initial() {
       try {
-        await auth.isLogin();
-        const res = await classroomService.getMyClassrooms();
+        await isLogin();
+        const res = await getMyClassrooms();
         console.log(res);
         setClassrooms(res.data.classrooms);
         // Initial Animation
@@ -59,7 +59,9 @@ export default function MyClassroomPage() {
   };
 
   return (
-    <div className={`transition-all duration-500 flex flex-col ${initState}`}>
+    <div
+      className={`transition-all duration-[250ms] flex flex-col ${initState}`}
+    >
       <div className="m-12 space-y-4 font-kanit ">
         <div className="flex flex-row items-center">
           <span className="text-5xl text-gray-600  ">

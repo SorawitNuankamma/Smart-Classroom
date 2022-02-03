@@ -1,48 +1,61 @@
-exports.userLogin = async (data) => {
-  const response = await fetch("http://localhost:5000/api/users/login", {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
+const userLogin = async (data) => {
+  const response = await fetch(
+    "https://smartclassroomservice.azurewebsites.net/api/users/login",
+    {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    }
+  );
   return response.json(); // parses JSON response into native JavaScript objects
 };
 
-exports.userRegister = async (data) => {
-  const response = await fetch("http://localhost:5000/api/users/signup", {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
+const userRegister = async (data) => {
+  const response = await fetch(
+    "https://smartclassroomservice.azurewebsites.net/api/users/signup",
+    {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    }
+  );
   return response.json(); // parses JSON response into native JavaScript objects
 };
 
-exports.isLogin = async () => {
+const isLogin = async () => {
   const token = window.sessionStorage.accessToken;
   if (!token || token === "undefined") {
     throw new Error("you are not logged in");
   }
-  const response = await fetch("http://localhost:5000/api/lineUsers/isLogin", {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: "{}", // body data type must match "Content-Type" header
-  });
-  if (response.status === "fail") {
-    throw new Error("you are not logged in");
+  try {
+    const response = await fetch(
+      "https://smartclassroomservice.azurewebsites.net/api/lineUsers/isLogin",
+      {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: "{}", // body data type must match "Content-Type" header
+      }
+    );
+    if (response.status === "fail") {
+      throw new Error("you are not logged in");
+    }
+    return response.json(); // parses JSON response into native JavaScript objects
+  } catch (e) {
+    throw new Error(e);
   }
-  return response.json(); // parses JSON response into native JavaScript objects
 };
 
-exports.getLineToken = async (code) => {
+const getLineToken = async (code) => {
   //TODO get client secert to config
   //TODO generate the code verifier
   const response = await fetch("https://api.line.me/oauth2/v2.1/token", {
@@ -60,32 +73,51 @@ exports.getLineToken = async (code) => {
   return response.json(); // parses JSON response into native JavaScript objects
 };
 
-exports.lineUserLogin = async (data) => {
+const lineUserLogin = async (data) => {
   const token = window.sessionStorage.lineToken;
-  const response = await fetch("http://localhost:5000/api/lineUsers/login", {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
+  try {
+    const response = await fetch(
+      "https://smartclassroomservice.azurewebsites.net/api/lineUsers/login",
+      {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      }
+    );
+    return response.json(); // parses JSON response into native JavaScript objects
+  } catch (e) {
+    throw new Error(e);
+  }
 };
 
-exports.lineUserSignUp = async (data) => {
+const lineUserSignUp = async (data) => {
   const token = window.sessionStorage.lineToken;
-  const response = await fetch("http://localhost:5000/api/lineUsers/signup", {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
+  const response = await fetch(
+    "https://smartclassroomservice.azurewebsites.net/api/lineUsers/signup",
+    {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    }
+  );
   return response.json(); // parses JSON response into native JavaScript objects
 };
 
 //https://smartclassroomservice.azurewebsites.net/api/users/login
+
+export {
+  userLogin,
+  userRegister,
+  lineUserSignUp,
+  lineUserLogin,
+  isLogin,
+  getLineToken,
+};

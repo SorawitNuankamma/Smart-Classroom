@@ -14,18 +14,18 @@ export default function PublicNavbar() {
           Smart Classroom
         </span>
         <ul className="flex flex-row justify-between space-x-10 font-kanit font-normal text-xl text-literature">
-          <li className="py-3">
+          <li className="py-3 hover:text-blue-600">
             <Link to=".">หน้าหลัก</Link>
           </li>
-          <li className="py-3">
+          <li className="py-3 hover:text-blue-600">
             <Link to="about">เกี่ยวกับ</Link>
           </li>
-          <li className="py-3">
+          <li className="py-3 hover:text-blue-600">
             <Link to="manual">คู่มือ</Link>
           </li>
           <li>
             <button
-              className="px-6 py-3 bg-skyblue text-white rounded-md hover:bg-blue-600 transition-all"
+              className="px-6 py-3 bg-skyblue text-white rounded-md hover:bg-blue-500 transition-all"
               onClick={() => {
                 navigate(`authentication`);
               }}

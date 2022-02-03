@@ -6,15 +6,14 @@ import { Outlet } from "react-router-dom";
 import "../styles/colors.css";
 
 //Service
-const auth = require("../../services/authentication");
-const userService = require("../../services/user");
-const classroomService = require("../../services/classroom");
+import { isLogin } from "../../services/authentication";
+import { getClassroom } from "../../services/classroom";
 
 export default function ClassroomPage() {
   // TODO : Implement the check if user is a member in the classroom
   const state = useSelector((state) => state);
 
-  const [initState, setInitState] = useState("opacity-0	translate-x-10	");
+  const [initState, setInitState] = useState("opacity-0	translate-x-0	");
   const [classroom, setClassroom] = useState([]);
 
   const navigate = useNavigate();
@@ -24,9 +23,9 @@ export default function ClassroomPage() {
   useEffect(() => {
     async function initial() {
       try {
-        await auth.isLogin();
+        await isLogin();
         // Fetch
-        const res = await classroomService.getClassroom(params.classroomId);
+        const res = await getClassroom(params.classroomId);
         setClassroom(res.data.classroom);
         // Initial Animation
         setInitState("opacity-100 translate-x-0");
@@ -40,9 +39,9 @@ export default function ClassroomPage() {
 
   return (
     <div
-      className={`transition-all duration-500 flex flex-col ${initState} w-full`}
+      className={`transition-all duration-[125ms] flex flex-col ${initState} w-full`}
     >
-      <div className={`color-${classroom.color} w-full`}>
+      <div className={`color-${classroom.color} w-full ml-5 py-5`}>
         <div className={`m-12 font-kanit `}>
           <span className={`text-5xl text-white w-screen `}>
             {classroom.name}

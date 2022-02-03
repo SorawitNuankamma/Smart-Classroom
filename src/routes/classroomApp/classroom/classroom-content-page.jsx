@@ -19,8 +19,7 @@ import ClassroomMenuButton from "../../../components/classroomMenuButton";
 import FilePicker from "../../../components/filePicker";
 
 //Service
-const classroomService = require("../../../services/classroom");
-const contentService = require("../../../services/content");
+import { getContent } from "../../../services/content";
 
 export default function ClassroomContentPage() {
   const state = useSelector((state) => state);
@@ -55,7 +54,7 @@ export default function ClassroomContentPage() {
   useEffect(() => {
     async function initial() {
       // Fetch
-      const res = await contentService.getContent(params.contentId);
+      const res = await getContent(params.contentId);
       if (res.status === "fail") {
         setCurrentAlert({
           type: "error",
@@ -77,7 +76,7 @@ export default function ClassroomContentPage() {
       <div
         className="mt-8 font-kanit text-blue-400 hover:text-blue-600 cursor-pointer"
         onClick={() => {
-          navigate(`..`);
+          navigate(`../classroom-${content.type}`);
         }}
       >
         <ArrowBackIosIcon />
@@ -85,7 +84,7 @@ export default function ClassroomContentPage() {
       </div>
       <div className="mt-8 font-kanit flex flex-row w-fit space-x-3 text-gray-600 ">
         <span className="text-4xl  ">{content.title}</span>
-        {state.user.currentClassroomRole !== "student" && (
+        {state.user.currentClassroomRole !== "Student" && (
           <>
             <button
               className="text-azure hover:text-blue-500 "

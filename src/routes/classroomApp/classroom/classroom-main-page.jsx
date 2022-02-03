@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import Divider from "@mui/material/Divider";
 
 //Component
 import ClassroomMenuButton from "../../../components/classroomMenuButton";
@@ -18,7 +19,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import { useSelector } from "react-redux";
 
 //Service
-const classroomService = require("../../../services/classroom");
+
+const btnStyle = `bg-[#f5f5f5] hover:bg-[#f0f0f0] transition-all ease-in-out cursor-pointer text-gray-600 text-xl w-[25rem] py-5 px-5 mt-4 grid grid-cols-[25px_1fr] items-center rounded-sm`;
 
 export default function ClassroomMainPage() {
   const state = useSelector((state) => state);
@@ -39,9 +41,9 @@ export default function ClassroomMainPage() {
   };
 
   return (
-    <>
+    <div className="ml-12">
       <div
-        className="ml-12 mt-8 font-kanit text-blue-400 hover:text-blue-600 cursor-pointer"
+        className="mt-8 font-kanit text-blue-400 hover:text-blue-600 cursor-pointer"
         onClick={() => {
           navigate(`../../my-classroom`);
         }}
@@ -51,109 +53,128 @@ export default function ClassroomMainPage() {
         </span>
         กลับไปหน้าที่แล้ว
       </div>
-      <div className="grid grid-cols-1 laptop:grid-cols-2 desktop:grid-cols-3 w-fit">
-        <div className="ml-12 mt-8 font-kanit">
-          <span className="text-xl text-gray-600">หน้าหลัก</span>
+      <div className="mt-8  font-kanit flex flex-row items-center">
+        <span className="text-4xl text-gray-600 ">เมนูหลัก</span>
+      </div>
+      <div className=" max-w-6xl mt-5">
+        <Divider />
+      </div>
+      <div className="grid grid-cols-1 laptop:grid-cols-2 w-fit gap-3">
+        <div className=" mt-8 font-kanit">
+          <span className="text-xl text-gray-600">เมนูทั่วไป</span>
           <div
-            className="bg-iron cursor-pointer text-gray-600 text-xl w-[20rem] py-5 px-5 rounded-md shadow-md mt-4 grid grid-cols-[25px_1fr] items-center"
+            className={btnStyle}
             onClick={() => {
               handleRouting(`classroom-information`);
             }}
           >
             <span className="text-azure">
-              <InfoIcon />
+              <InfoIcon fontSize="large" />
             </span>
-            <span className="ml-3">ข้อมูลของห้องเรียน</span>
+            <span className="ml-8">ข้อมูลของห้องเรียน</span>
           </div>
           <div
-            className="bg-iron cursor-pointer text-gray-600 text-xl w-[20rem] py-5 px-5 rounded-md shadow-md mt-4 grid grid-cols-[25px_1fr] items-center"
+            className={btnStyle}
             onClick={() => {
               handleRouting(`classroom-my-profile`);
             }}
           >
             <span className="text-azure">
-              <PersonIcon />
+              <PersonIcon fontSize="large" />
             </span>
-            <span className="ml-3">ข้อมูลของฉันในห้องเรียน</span>
+            <span className="ml-8">ข้อมูลของฉันในห้องเรียน</span>
           </div>
           <div
-            className="bg-iron cursor-pointer text-gray-600 text-xl w-[20rem] py-5 px-5 rounded-md shadow-md mt-4 grid grid-cols-[25px_1fr] items-center"
+            className={btnStyle}
             onClick={() => {
               handleRouting(`classroom-annoucement`);
             }}
           >
             <span className="text-azure">
-              <CampaignIcon />
+              <CampaignIcon fontSize="large" />
             </span>
-            <span className="ml-3">ประกาศ</span>
+            <span className="ml-8">ประกาศ</span>
           </div>
           <div
-            className="bg-iron cursor-pointer text-gray-600 text-xl w-[20rem] py-5 px-5 rounded-md shadow-md mt-4 grid grid-cols-[25px_1fr] items-center"
+            className={btnStyle}
             onClick={() => {
               handleRouting(`classroom-lesson`);
             }}
           >
             <span className="text-azure">
-              <MenuBookIcon />
+              <MenuBookIcon fontSize="large" />
             </span>
-            <span className="ml-3">บทเรียน</span>
+            <span className="ml-8">บทเรียน</span>
           </div>
           <div
-            className="bg-iron cursor-pointer text-gray-600 text-xl w-[20rem] py-5 px-5 rounded-md shadow-md mt-4 grid grid-cols-[25px_1fr] items-center"
+            className={btnStyle}
             onClick={() => {
               handleRouting(`classroom-assignment`);
             }}
           >
             <span className="text-azure">
-              <AssignmentIcon />
+              <AssignmentIcon fontSize="large" />
             </span>
-            <span className="ml-3">แบบฝึกหัด</span>
+            <span className="ml-8">แบบฝึกหัด</span>
           </div>
         </div>
         {state.user.currentClassroomRole !== "Student" && (
-          <div className="ml-12 mt-8 font-kanit">
+          <div className="mt-8 font-kanit">
             <span className="text-xl text-gray-600">เมนูอาจารย์ผู้สอน</span>
             <div
-              className="bg-iron cursor-pointer text-gray-600 text-xl w-[20rem] py-5 px-5 rounded-md shadow-md mt-4 grid grid-cols-[25px_1fr] items-center"
+              className={btnStyle}
               onClick={() => {
                 handleRouting(`classroom-members`);
               }}
             >
               <span className="text-azure">
-                <AccountBoxIcon />
+                <AccountBoxIcon fontSize="large" />
               </span>
-              <span className="ml-3">สมาชิกห้องเรียน</span>
+              <span className="ml-8">สมาชิกห้องเรียน</span>
             </div>
             <div
-              className="bg-iron cursor-pointer text-gray-600 text-xl w-[20rem] py-5 px-5 rounded-md shadow-md mt-4 grid grid-cols-[25px_1fr] items-center"
+              className={btnStyle}
               onClick={() => {
                 handleRouting(`classroom-scoreboard`);
               }}
             >
               <span className="text-azure">
-                <ViewListIcon />
+                <ViewListIcon fontSize="large" />
               </span>
-              <span className="ml-3">คะแนนสมาชิกห้องเรียน</span>
+              <span className="ml-8">คะแนนสมาชิกห้องเรียน</span>
             </div>
           </div>
         )}
         {state.user.currentClassroomRole === "Owner" && (
-          <div className="ml-12 mt-8 font-kanit">
+          <div className="mt-8 font-kanit">
             <span className="text-xl text-gray-600">เมนูผู้ดูแลห้องเรียน</span>
             <div
-              className="bg-iron cursor-pointer text-gray-600 text-xl w-[20rem] py-5 px-5 rounded-md shadow-md mt-4 grid grid-cols-[25px_1fr] items-center"
+              className={btnStyle}
               onClick={() => {
                 handleRouting(`classroom-setting`);
               }}
             >
               <span className="text-azure">
-                <SettingsIcon />
+                <SettingsIcon fontSize="large" />
               </span>
-              <span className="ml-3">ตั้งค่าห้องเรียน</span>
+              <span className="ml-8">ตั้งค่าห้องเรียน</span>
+            </div>
+            <div
+              className={btnStyle}
+              onClick={() => {
+                handleRouting(`classroom-setting`);
+              }}
+            >
+              <span className="text-azure">
+                <SettingsIcon fontSize="large" />
+              </span>
+              <span className="ml-8">
+                ตั้งค่า Bot และการเชื่อมต่อกับกลุ่มไลน์
+              </span>
             </div>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

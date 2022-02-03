@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 //Service
-const auth = require("../../services/authentication");
-//const userService = require("../services/user");
+import { isLogin } from "../../services/authentication";
 
 export default function SettingPage() {
   const [user, setUser] = useState({
@@ -18,9 +17,7 @@ export default function SettingPage() {
     async function initial() {
       try {
         console.log("wtf");
-        await auth.isLogin();
-        //const res = await userService.getMyUser();
-        //setUser(res.data.user);
+        await isLogin();
         // Initial Animation
         setInitState("opacity-100 translate-x-0");
       } catch {

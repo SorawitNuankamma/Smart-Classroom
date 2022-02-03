@@ -14,6 +14,7 @@ import EditField from "./editField";
 
 import SortIcon from "@mui/icons-material/Sort";
 
+//Document will
 export default function SmartTable(props) {
   const [column, setColumn] = useState([]);
   const [rows, setRows] = useState([]);
@@ -49,8 +50,8 @@ export default function SmartTable(props) {
     if (type === "link") {
       return (
         <TableCell key={index} component="th" scope="row">
-          <span className="text-blue-600 font-kanit text-lg  ">
-            <Link to={data.link}>{data.value}</Link>
+          <span className="text-blue-600  ">
+            <Link to={data.path}>{data.value}</Link>
           </span>
         </TableCell>
       );
@@ -85,7 +86,7 @@ export default function SmartTable(props) {
 
     return (
       <TableCell key={index} component="th" scope="row">
-        <span className="font-kanit text-lg">
+        <span className="">
           {data.value === "" || data.value === 0 ? "ไม่มี" : data.value}
         </span>
       </TableCell>
@@ -109,9 +110,7 @@ export default function SmartTable(props) {
             {Object.keys(column).map((columnName, index) => (
               <TableCell key={index}>
                 <div className="flex flex-row items-center">
-                  <span className="font-kanit text-lg">
-                    {column[columnName].name}
-                  </span>
+                  <span className="">{column[columnName].name}</span>
                   {column[columnName].sortAble && false && (
                     // Disable sort due to rendering bug
                     <button

@@ -11,7 +11,11 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Divider from "@mui/material/Divider";
 
 //Service
-const contentService = require("../../../services/content");
+import {
+  patchContent,
+  postContent,
+  getContent,
+} from "../../../services/content";
 
 const ifAssignment = {
   assignment: true,
@@ -54,14 +58,11 @@ export default function ClassroomCreateContentPage(props) {
     };
     // IF EDIT
     if (props.edit) {
-      const res = await contentService.patchContent(
-        contentObj,
-        params.contentId
-      );
+      const res = await patchContent(contentObj, params.contentId);
       navigate(`../classroom-${props.type}/${params.contentId}`);
     } else {
       // If CREATE
-      const res = await contentService.postContent(contentObj);
+      const res = await postContent(contentObj);
       const id = res.data.newContent.id;
       navigate(`../classroom-${props.type}/${id}`);
     }
@@ -73,7 +74,7 @@ export default function ClassroomCreateContentPage(props) {
     async function initial() {
       // Fetch
       if (props.edit) {
-        const res = await contentService.getContent(params.contentId);
+        const res = await getContent(params.contentId);
         console.log(JSON.parse(res.data.content.body));
         setContentTitle(res.data.content.title);
 

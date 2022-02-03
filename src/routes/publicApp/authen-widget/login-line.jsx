@@ -11,25 +11,24 @@ export default function LoginLine() {
 
   //Redux
   const dispatch = useDispatch();
-  const { setCurrentOperation, setCurrentAlert } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+  const { setCurrentOperation } = bindActionCreators(actionCreators, dispatch);
 
   const handleLineLogin = () => {
     setCurrentOperation("login");
-    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1656756645&redirect_uri=http://localhost:3000/authentication/result
+    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1656756645&redirect_uri=https://smart-classroom-cdf43.web.app/authentication/result
+authentication/result
 &state=12345abcde&scope=profile%20openid`;
   };
 
   const handleLineSignUp = () => {
     setCurrentOperation("signup");
-    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1656756645&redirect_uri=http://localhost:3000/authentication/result
+    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1656756645&redirect_uri=https://smart-classroom-cdf43.web.app/authentication/result
+/authentication/result
 &state=12345abcde&scope=profile%20openid`;
   };
 
   return (
-    <div className="grid justify-center p-10 sm:shadow-md sm:rounded-lg landing-animation-right w-96  ">
+    <div className="grid justify-center  sm:shadow-md sm:rounded-lg landing-animation-right w-[400px] h-[600px] py-10  ">
       <span className="block text-4xl  mb-10 text-darkcloud font-kanit text-center">
         เข้าสู่ระบบ
       </span>
@@ -37,7 +36,7 @@ export default function LoginLine() {
         <img src="../images/teacher2.webp" alt="" className="absolute" />
       </div>
       <button
-        className="bg-line text-white mt-5 px-10 py-4 text-xl font-kanit rounded-md relative landing-animation-right"
+        className="bg-line text-white mt-5 px-10 py-4 text-xl font-kanit rounded-md relative landing-animation-right hover:bg-[#09d45e]"
         onClick={handleLineLogin}
       >
         <span className="px-2">เข้าสู่ระบบด้วย LINE</span>
@@ -50,24 +49,28 @@ export default function LoginLine() {
       </button>
       {
         //DEVELOPMENT ONLY
-        <>
-          <button
-            className="text-red-500 text-2xl"
-            onClick={() => {
-              navigate(`result?code=QWERTY`);
-            }}
-          >
-            LOGIN AS FAKEUSER
-          </button>
-          <button
-            className="text-red-500 text-2xl"
-            onClick={() => {
-              navigate(`result?code=YUIOP`);
-            }}
-          >
-            LOGIN AS FAKEUSER2
-          </button>
-        </>
+        false && (
+          <>
+            <button
+              className="text-red-500 text-1xl"
+              onClick={() => {
+                setCurrentOperation("login");
+                navigate(`result?code=QWERTY`);
+              }}
+            >
+              LOGIN AS FAKEUSER
+            </button>
+            <button
+              className="text-red-500 text-1xl"
+              onClick={() => {
+                setCurrentOperation("login");
+                navigate(`result?code=YUIOP`);
+              }}
+            >
+              LOGIN AS FAKEUSER2
+            </button>
+          </>
+        )
         //DEVELOPMENT ONLY END
       }
     </div>

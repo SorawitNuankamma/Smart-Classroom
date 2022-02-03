@@ -1,36 +1,7 @@
-exports.postClassroom = async (data) => {
-  const token = window.sessionStorage.accessToken;
-  const response = await fetch("http://localhost:5000/api/classrooms/", {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
-};
-
-exports.patchClassroom = async (data, id) => {
-  // TODO get token from localStorage
-  const token = window.sessionStorage.accessToken;
-  const response = await fetch(`http://localhost:5000/api/classrooms/${id}`, {
-    method: "PATCH", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
-};
-
-exports.joinClassroom = async (data) => {
+const postClassroom = async (data) => {
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    "http://localhost:5000/api/classrooms/joinClassroom",
+    "https://smartclassroomservice.azurewebsites.net/api/classrooms/",
     {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -44,25 +15,63 @@ exports.joinClassroom = async (data) => {
   return response.json(); // parses JSON response into native JavaScript objects
 };
 
-exports.getClassroom = async (id) => {
+const patchClassroom = async (data, id) => {
+  // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
-  const response = await fetch(`http://localhost:5000/api/classrooms/${id}`, {
-    method: "GET", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  });
+  const response = await fetch(
+    `https://smartclassroomservice.azurewebsites.net/api/classrooms/${id}`,
+    {
+      method: "PATCH", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    }
+  );
   return response.json(); // parses JSON response into native JavaScript objects
 };
 
-exports.getClassrooms = async (filterObj) => {
+const joinClassroom = async (data) => {
+  const token = window.sessionStorage.accessToken;
+  const response = await fetch(
+    "https://smartclassroomservice.azurewebsites.net/api/classrooms/joinClassroom",
+    {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(data), // body data type must match "Content-Type" header
+    }
+  );
+  return response.json(); // parses JSON response into native JavaScript objects
+};
+
+const getClassroom = async (id) => {
+  const token = window.sessionStorage.accessToken;
+  const response = await fetch(
+    `https://smartclassroomservice.azurewebsites.net/api/classrooms/${id}`,
+    {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  return response.json(); // parses JSON response into native JavaScript objects
+};
+
+const getClassrooms = async (filterObj) => {
   let searchParams = new URLSearchParams(filterObj);
 
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `http://localhost:5000/api/classrooms?${searchParams.toString()}`,
+    `https://smartclassroomservice.azurewebsites.net/api/classrooms?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -75,10 +84,10 @@ exports.getClassrooms = async (filterObj) => {
   return response.json(); // parses JSON response into native JavaScript objects
 };
 
-exports.getMyClassrooms = async () => {
+const getMyClassrooms = async () => {
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `http://localhost:5000/api/classrooms/getMyClassroom`,
+    `https://smartclassroomservice.azurewebsites.net/api/classrooms/getMyClassroom`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -91,12 +100,12 @@ exports.getMyClassrooms = async () => {
   return response.json(); // parses JSON response into native JavaScript objects
 };
 
-exports.getMemberInfo = async (filterObj) => {
+const getMemberInfo = async (filterObj) => {
   let searchParams = new URLSearchParams(filterObj);
 
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `http://localhost:5000/api/classrooms/getMemberInfo?${searchParams.toString()}`,
+    `https://smartclassroomservice.azurewebsites.net/api/classrooms/getMemberInfo?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -107,4 +116,33 @@ exports.getMemberInfo = async (filterObj) => {
     }
   );
   return response.json(); // parses JSON response into native JavaScript objects
+};
+
+const getAllMembersAndSubmissions = async (filterObj) => {
+  let searchParams = new URLSearchParams(filterObj);
+
+  const token = window.sessionStorage.accessToken;
+  const response = await fetch(
+    `https://smartclassroomservice.azurewebsites.net/api/classrooms/getAllMembersAndSubmissions?${searchParams.toString()}`,
+    {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  return response.json(); // parses JSON response into native JavaScript objects
+};
+
+export {
+  postClassroom,
+  patchClassroom,
+  joinClassroom,
+  getClassroom,
+  getMyClassrooms,
+  getClassrooms,
+  getMemberInfo,
+  getAllMembersAndSubmissions,
 };

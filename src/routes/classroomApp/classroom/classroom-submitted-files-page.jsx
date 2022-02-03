@@ -37,7 +37,7 @@ export default function ClassroomSubmittedFilesPage(props) {
         return {
           name: {
             value: el.member.name,
-            link: `../classroom-members/${el.member.userId}`,
+            path: `../classroom-members/${el.member.userId}`,
           },
           code: {
             value: el.member.code,
