@@ -15,16 +15,12 @@ export default function LoginLine() {
 
   const handleLineLogin = () => {
     setCurrentOperation("login");
-    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1656756645&redirect_uri=https://smart-classroom-cdf43.web.app/authentication/result
-authentication/result
-&state=12345abcde&scope=profile%20openid`;
+    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1656756645&redirect_uri=http://localhost:3000/authentication/result&state=12345abcde&scope=profile%20openid`;
   };
 
   const handleLineSignUp = () => {
     setCurrentOperation("signup");
-    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1656756645&redirect_uri=https://smart-classroom-cdf43.web.app/authentication/result
-/authentication/result
-&state=12345abcde&scope=profile%20openid`;
+    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1656756645&redirect_uri=http://localhost:3000/authentication/result&state=12345abcde&scope=profile%20openid`;
   };
 
   return (
