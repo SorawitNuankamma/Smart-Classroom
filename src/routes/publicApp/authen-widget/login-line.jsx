@@ -8,6 +8,7 @@ import { actionCreators } from "../../../redux/root-action";
 
 export default function LoginLine() {
   const navigate = useNavigate();
+  const clientRoute = `https://smart-classroom-demo.vercel.app/`;
 
   //Redux
   const dispatch = useDispatch();
@@ -15,12 +16,12 @@ export default function LoginLine() {
 
   const handleLineLogin = () => {
     setCurrentOperation("login");
-    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1656756645&redirect_uri=http://localhost:3000/authentication/result&state=12345abcde&scope=profile%20openid`;
+    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1656756645&redirect_uri=${clientRoute}authentication/result&state=12345abcde&scope=profile%20openid`;
   };
 
   const handleLineSignUp = () => {
     setCurrentOperation("signup");
-    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1656756645&redirect_uri=http://localhost:3000/authentication/result&state=12345abcde&scope=profile%20openid`;
+    window.location.href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1656756645&redirect_uri=${clientRoute}authentication/result&state=12345abcde&scope=profile%20openid`;
   };
 
   return (
@@ -45,28 +46,26 @@ export default function LoginLine() {
       </button>
       {
         //DEVELOPMENT ONLY
-        false && (
-          <>
-            <button
-              className="text-red-500 text-1xl"
-              onClick={() => {
-                setCurrentOperation("login");
-                navigate(`result?code=QWERTY`);
-              }}
-            >
-              LOGIN AS FAKEUSER
-            </button>
-            <button
-              className="text-red-500 text-1xl"
-              onClick={() => {
-                setCurrentOperation("login");
-                navigate(`result?code=YUIOP`);
-              }}
-            >
-              LOGIN AS FAKEUSER2
-            </button>
-          </>
-        )
+        <>
+          <button
+            className="text-green-500 text-1xl"
+            onClick={() => {
+              setCurrentOperation("login");
+              navigate(`result?code=QWERTY`);
+            }}
+          >
+            LOGIN AS FAKEUSER
+          </button>
+          <button
+            className="text-green-500 text-1xl"
+            onClick={() => {
+              setCurrentOperation("login");
+              navigate(`result?code=YUIOP`);
+            }}
+          >
+            LOGIN AS FAKEUSER2
+          </button>
+        </>
         //DEVELOPMENT ONLY END
       }
     </div>
