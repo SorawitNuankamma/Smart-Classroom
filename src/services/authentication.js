@@ -64,7 +64,8 @@ const getLineToken = async (code) => {
     body: new URLSearchParams({
       grant_type: "authorization_code",
       code: code,
-      redirect_uri: "http://localhost:3000/authentication/result",
+      redirect_uri:
+        "https://smart-classroom-demo.vercel.app/authentication/result",
       client_id: "1656756645",
       client_secret: "d6af803613c6210043f93a65dbe70dd7",
       code_verifier: "wJKN8qz5t8SSI9lMFhZA6qwNkQBkuPZoCxzRhwLRUo1",
