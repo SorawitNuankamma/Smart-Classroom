@@ -28,6 +28,8 @@ import ClassroomAllMembersPage from "./routes/classroomApp/classroom/classroom-a
 import ClassroomMemberPage from "./routes/classroomApp/classroom/classroom-member-page";
 import ClassroomScoreBoardPage from "./routes/classroomApp/classroom/classroom-scoreboard-page";
 import ClassroomSettingPage from "./routes/classroomApp/classroom/classroom-setting-page";
+import LoginResult from "./routes/publicApp/authen-widget/login-result";
+import ClassroomBotSettingPage from "./routes/classroomApp/classroom/classroom-bot-setting-page";
 
 function App() {
   return (
@@ -41,6 +43,7 @@ function App() {
           <Route path="authentication" element={<AuthenPage />}>
             <Route index element={<LoginLine />} />
             <Route path="result" element={<AuthenResult />} />
+            <Route path="login-result" element={<LoginResult />} />
           </Route>
         </Route>
         <Route path="/app" element={<ClassroomApp />}>
@@ -61,6 +64,10 @@ function App() {
               path="classroom-setting"
               element={<ClassroomSettingPage />}
             />
+            <Route
+              path="classroom-bot-setting"
+              element={<ClassroomBotSettingPage />}
+            ></Route>
             <Route
               path="classroom-members"
               element={<ClassroomAllMembersPage />}

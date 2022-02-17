@@ -1,19 +1,24 @@
+import FileSystemNavigator from "../../components/fileSystemNavigator";
+import Divider from "@mui/material/Divider";
+import "../styles/general.css";
+import { Outlet } from "react-router-dom";
+
 export default function ManualPage() {
   return (
-    <div className="h-screen public-app">
-      <div className="px-16 grid my-20 gap-y-8 lg:px-48 lg:grid-cols-2">
-        <div className="">
-          <h1 className="text-5xl font-bold mb-10 text-blue-600/75">
-            <span className="block text-royal">Manual</span>
-            <span className="block text-golden">Classroom</span>
-          </h1>
-          <p className="text-blue-600/75 max-w-md text-lg text-darkcloud font-kanit">
-            สร้างและบริหารห้องเรียนออนไลน์อย่างง่าย
-            ที่นักเรียนและครูสามารถใช้งานได้บนเว็บไซต์ร่วมกับไลน์แอพพลิเคชั่น
-          </p>
+    <div className="h-screen">
+      <div className="px-20 lg:px-48 mt-10">
+        <span className="font-kanit text-5xl">คู่มือการใช้งาน</span>
+      </div>
+      <div className="px-20 lg:px-48  mt-10">
+        <Divider />
+      </div>
+      <div className="px-20 lg:px-48 mt-10 manual-body ">
+        <div className="landing-animation-right">
+          <FileSystemNavigator />
         </div>
-        <div></div>
-        <div className="mt-24 lg:mt-12"></div>
+        <div className="landing-animation-left">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

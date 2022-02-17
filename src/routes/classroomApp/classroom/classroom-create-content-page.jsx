@@ -63,6 +63,7 @@ export default function ClassroomCreateContentPage(props) {
     } else {
       // If CREATE
       const res = await postContent(contentObj);
+      console.log(res);
       const id = res.data.newContent.id;
       navigate(`../classroom-${props.type}/${id}`);
     }

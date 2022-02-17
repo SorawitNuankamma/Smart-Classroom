@@ -1,6 +1,10 @@
 const userLogin = async (data) => {
   const response = await fetch(
-    "https://smartclassroomservice.azurewebsites.net/api/users/login",
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/users/login`,
     {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -15,7 +19,11 @@ const userLogin = async (data) => {
 
 const userRegister = async (data) => {
   const response = await fetch(
-    "https://smartclassroomservice.azurewebsites.net/api/users/signup",
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/users/signup`,
     {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -35,7 +43,11 @@ const isLogin = async () => {
   }
   try {
     const response = await fetch(
-      "https://smartclassroomservice.azurewebsites.net/api/lineUsers/isLogin",
+      `${
+        process.env.REACT_APP_ENV === "development"
+          ? process.env.REACT_APP_BACKEND_DEV
+          : process.env.REACT_APP_BACKEND_PROD
+      }/api/lineUsers/isLogin`,
       {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
@@ -78,7 +90,11 @@ const lineUserLogin = async (data) => {
   const token = window.sessionStorage.lineToken;
   try {
     const response = await fetch(
-      "https://smartclassroomservice.azurewebsites.net/api/lineUsers/login",
+      `${
+        process.env.REACT_APP_ENV === "development"
+          ? process.env.REACT_APP_BACKEND_DEV
+          : process.env.REACT_APP_BACKEND_PROD
+      }/api/lineUsers/login`,
       {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
@@ -95,10 +111,37 @@ const lineUserLogin = async (data) => {
   }
 };
 
+const lineUserAuthen = async (data) => {
+  try {
+    const response = await fetch(
+      `${
+        process.env.REACT_APP_ENV === "development"
+          ? process.env.REACT_APP_BACKEND_DEV
+          : process.env.REACT_APP_BACKEND_PROD
+      }/api/lineUsers/authen`,
+      {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+      }
+    );
+    return response.json(); // parses JSON response into native JavaScript objects
+  } catch (e) {
+    throw new Error(e);
+  }
+};
+
 const lineUserSignUp = async (data) => {
   const token = window.sessionStorage.lineToken;
   const response = await fetch(
-    "https://smartclassroomservice.azurewebsites.net/api/lineUsers/signup",
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/lineUsers/signup`,
     {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -121,4 +164,5 @@ export {
   lineUserLogin,
   isLogin,
   getLineToken,
+  lineUserAuthen,
 };

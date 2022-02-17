@@ -23,7 +23,7 @@ export default function ClassroomPage() {
   useEffect(() => {
     async function initial() {
       try {
-        await isLogin();
+        //await isLogin();
         // Fetch
         const res = await getClassroom(params.classroomId);
         setClassroom(res.data.classroom);

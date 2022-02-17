@@ -1,7 +1,11 @@
 const postClassroom = async (data) => {
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    "https://smartclassroomservice.azurewebsites.net/api/classrooms/",
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/classrooms/`,
     {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -19,7 +23,11 @@ const patchClassroom = async (data, id) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/classrooms/${id}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/classrooms/${id}`,
     {
       method: "PATCH", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -36,7 +44,11 @@ const patchClassroom = async (data, id) => {
 const joinClassroom = async (data) => {
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    "https://smartclassroomservice.azurewebsites.net/api/classrooms/joinClassroom",
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/classrooms/joinClassroom`,
     {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -53,7 +65,11 @@ const joinClassroom = async (data) => {
 const getClassroom = async (id) => {
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/classrooms/${id}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/classrooms/${id}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -71,7 +87,11 @@ const getClassrooms = async (filterObj) => {
 
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/classrooms?${searchParams.toString()}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/classrooms?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -87,7 +107,11 @@ const getClassrooms = async (filterObj) => {
 const getMyClassrooms = async () => {
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/classrooms/getMyClassroom`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/classrooms/getMyClassroom`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -105,7 +129,11 @@ const getMemberInfo = async (filterObj) => {
 
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/classrooms/getMemberInfo?${searchParams.toString()}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/classrooms/getMemberInfo?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -123,7 +151,11 @@ const getAllMembersAndSubmissions = async (filterObj) => {
 
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/classrooms/getAllMembersAndSubmissions?${searchParams.toString()}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/classrooms/getAllMembersAndSubmissions?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin

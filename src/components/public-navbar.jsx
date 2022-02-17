@@ -9,11 +9,11 @@ export default function PublicNavbar() {
   const navigate = useNavigate();
   return (
     <>
-      <div className="flex flex-row justify-between py-8 px-44 select-none">
+      <div className="flex flex-row justify-between py-8 px-20 lg:px-48 select-none">
         <span className="px-6 py-3 font-kanit font-semibold text-2xl text-darkcloud ">
           Smart Classroom
         </span>
-        <ul className="flex flex-row justify-between space-x-10 font-kanit font-normal text-xl text-literature">
+        <ul className="flex flex-row justify-between space-x-10 font-kanit font-normal text-xl text-literature ">
           <li className="py-3 hover:text-blue-600">
             <Link to=".">หน้าหลัก</Link>
           </li>

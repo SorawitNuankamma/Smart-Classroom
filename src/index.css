@@ -675,6 +675,9 @@ select {
 .mt-16 {
   margin-top: 4rem;
 }
+.mr-10 {
+  margin-right: 2.5rem;
+}
 .ml-8 {
   margin-left: 2rem;
 }
@@ -1115,9 +1118,9 @@ select {
   padding-left: 2rem;
   padding-right: 2rem;
 }
-.px-44 {
-  padding-left: 11rem;
-  padding-right: 11rem;
+.px-20 {
+  padding-left: 5rem;
+  padding-right: 5rem;
 }
 .px-6 {
   padding-left: 1.5rem;
@@ -1134,10 +1137,6 @@ select {
 .px-0 {
   padding-left: 0px;
   padding-right: 0px;
-}
-.px-20 {
-  padding-left: 5rem;
-  padding-right: 5rem;
 }
 .px-7 {
   padding-left: 1.75rem;

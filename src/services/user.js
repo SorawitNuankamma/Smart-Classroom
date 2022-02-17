@@ -2,7 +2,11 @@ const updateMyUser = async (data) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    "https://smartclassroomservice.azurewebsites.net/api/users/updateMyUser",
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/users/updateMyUser`,
     {
       method: "PATCH", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -20,7 +24,11 @@ const getMyUser = async () => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    "https://smartclassroomservice.azurewebsites.net/api/users/getMyUser",
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/users/getMyUser`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin

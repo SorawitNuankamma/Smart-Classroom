@@ -2,7 +2,11 @@ const postContent = async (data) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    "https://smartclassroomservice.azurewebsites.net/api/contents/",
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/contents/`,
     {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -20,7 +24,11 @@ const patchContent = async (data, id) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/contents/${id}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/contents/${id}`,
     {
       method: "PATCH", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -40,7 +48,11 @@ const getContents = async (filterObj) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/contents?${searchParams.toString()}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/contents?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -57,7 +69,11 @@ const getContent = async (id) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/contents/${id}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/contents/${id}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin

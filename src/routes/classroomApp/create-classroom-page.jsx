@@ -20,11 +20,22 @@ import { useSelector } from "react-redux";
 import { isLogin } from "../../services/authentication";
 import { postClassroom } from "../../services/classroom";
 
+const timeValue = {
+  Sunday: 0,
+  Monday: 1,
+  Tuesday: 2,
+  Wednesday: 3,
+  Thursday: 4,
+  Friday: 5,
+  Saturday: 6,
+};
+
 export default function CreateClassroomPage() {
   // UI State
   const [initState, setInitState] = useState("opacity-0	translate-x-10	");
   // Field
   const [nameField, setNameField] = useState(""); // Submit State
+  const [meetingLink, setMeetingLink] = useState("");
   const [descField, setDescField] = useState(""); // Submit State
   const [ruleField, setRuleField] = useState(""); // Submit State
   const [classColor, setClassColor] = useState("green"); // Submit State
@@ -39,12 +50,23 @@ export default function CreateClassroomPage() {
   const handleCreateClassroom = async () => {
     //Validate data
     //packing data
+    let sortedInterval = timeIntervals.slice().sort((a, b) => {
+      if (timeValue[a[0]] < timeValue[b[0]]) {
+        return -1;
+      }
+      if (timeValue[a[0]] < timeValue[b[0]]) {
+        return 1;
+      }
+      return 0;
+    });
+
     const classroomObject = {
       name: nameField,
       description: descField,
       color: classColor,
       rules: ruleField,
-      timetable: timeIntervals,
+      meetingLink: meetingLink,
+      timetable: sortedInterval,
     };
     let res = await postClassroom(classroomObject);
     console.log(res);
@@ -56,8 +78,7 @@ export default function CreateClassroomPage() {
         message: "สร้างห้องเรียนใหม่สำเร็จ",
         link: null,
       });
-
-      //navigate("/home/error");
+      navigate(`/app/my-classroom/${res.data.newClassroom.id}`);
     } else {
       setCurrentAlert({
         type: "error",
@@ -128,6 +149,27 @@ export default function CreateClassroomPage() {
                   setDescField(e.target.value);
                 }}
               ></textarea>
+            </label>
+            <label className="block mt-8">
+              <span className="text-gray-700">
+                Link สำหรับการ meeting เช่น zoom หรือ google meet
+              </span>
+              <input
+                type="text"
+                className="
+                    mt-1
+                    block
+                    w-full
+                    rounded-md
+                    border-gray-300
+                    shadow-sm
+                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                  "
+                placeholder="meeting url"
+                onChange={(e) => {
+                  setMeetingLink(e.target.value);
+                }}
+              ></input>
             </label>
             <label className="block mt-8">
               <span className="text-gray-700">กฎของห้องเรียน</span>

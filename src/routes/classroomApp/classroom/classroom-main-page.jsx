@@ -162,7 +162,7 @@ export default function ClassroomMainPage() {
             <div
               className={btnStyle}
               onClick={() => {
-                handleRouting(`classroom-setting`);
+                handleRouting(`classroom-bot-setting`);
               }}
             >
               <span className="text-azure">

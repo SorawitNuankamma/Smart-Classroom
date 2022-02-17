@@ -2,7 +2,11 @@ const postSubmission = async (data) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    "https://smartclassroomservice.azurewebsites.net/api/submissions/",
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/submissions/`,
     {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -20,7 +24,11 @@ const patchSubmission = async (data, id) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/submissions/${id}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/submissions/${id}`,
     {
       method: "PATCH", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -37,7 +45,11 @@ const patchSubmission = async (data, id) => {
 const getMySubmission = async (data) => {
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/submissions/getMySubmission`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/submissions/getMySubmission`,
     {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -56,7 +68,11 @@ const getSubmissions = async (filterObj) => {
 
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/submissions?${searchParams.toString()}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/submissions?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -74,7 +90,11 @@ const getSubmissionsAndFile = async (filterObj) => {
 
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/submissions/getSubmissionsAndFile?${searchParams.toString()}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/submissions/getSubmissionsAndFile?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin

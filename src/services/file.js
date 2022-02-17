@@ -2,7 +2,11 @@ const postFile = async (data) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    "https://smartclassroomservice.azurewebsites.net/api/files/",
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/files/`,
     {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -21,7 +25,11 @@ const getFiles = async (filterObj) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/files?${searchParams.toString()}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/files?${searchParams.toString()}`,
     {
       method: "GET", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
@@ -38,7 +46,11 @@ const patchFile = async (data, id) => {
   // TODO get token from localStorage
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
-    `https://smartclassroomservice.azurewebsites.net/api/files/${id}`,
+    `${
+      process.env.REACT_APP_ENV === "development"
+        ? process.env.REACT_APP_BACKEND_DEV
+        : process.env.REACT_APP_BACKEND_PROD
+    }/api/files/${id}`,
     {
       method: "PATCH", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
