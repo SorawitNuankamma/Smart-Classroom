@@ -18,3 +18,10 @@ export const setCurrentAlert = (alert) => {
     payload: alert,
   };
 };
+
+export const setCurrentLoginTo = (route) => {
+  return {
+    type: "SET_CURRENT_LOGIN_TO",
+    payload: route,
+  };
+};

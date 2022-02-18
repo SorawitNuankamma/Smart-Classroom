@@ -20,6 +20,7 @@ export default function MyClassroomPage() {
 
   const [initState, setInitState] = useState("opacity-0	translate-x-0	");
   const [classrooms, setClassrooms] = useState([]);
+  const [isFetch, setIsFetch] = useState(false);
 
   const navigate = useNavigate();
   //Redux
@@ -35,8 +36,12 @@ export default function MyClassroomPage() {
       try {
         await isLogin();
         const res = await getMyClassrooms();
-        console.log(res);
+        if (res.status === "fail") {
+          console.log("fetching failed");
+          return;
+        }
         setClassrooms(res.data.classrooms);
+        setIsFetch(true);
         // Initial Animation
         setInitState("opacity-100 translate-x-0");
       } catch {
@@ -81,16 +86,22 @@ export default function MyClassroomPage() {
           <Divider />
         </div>
         <div className="mt-16 grid gap-4 grid-cols-1 md:grid-cols-2 desktop:grid-cols-3 w-fit">
-          {classrooms.map((el, index) => (
+          {isFetch &&
+            classrooms.map((el, index) => (
+              <div
+                key={index}
+                onClick={() => handleClickClassroom(el.id, index)}
+                className={`color-${el.color} px-5 py-3 w-64 h-32 cursor-pointer rounded-md`}
+              >
+                <span className="block text-2xl text-white">{el.name}</span>
+                <span className="block text-white">{el.users[0].name}</span>
+              </div>
+            ))}
+          {!isFetch && (
             <div
-              key={index}
-              onClick={() => handleClickClassroom(el.id, index)}
-              className={`color-${el.color} px-5 py-3 w-64 h-32 cursor-pointer rounded-md`}
-            >
-              <span className="block text-2xl text-white">{el.name}</span>
-              <span className="block text-white">{el.users[0].name}</span>
-            </div>
-          ))}
+              className={`animate-pulse bg-gray-200 px-5 py-3 w-64 h-32 cursor-pointer rounded-md`}
+            ></div>
+          )}
         </div>
       </div>
     </div>

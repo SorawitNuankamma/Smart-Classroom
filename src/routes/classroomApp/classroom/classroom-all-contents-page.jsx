@@ -14,6 +14,7 @@ import { getContents } from "../../../services/content";
 export default function ClassroomAllContentsPage(props) {
   const state = useSelector((state) => state);
   const [contents, setContents] = useState([]);
+  const [isFetch, setIsFetch] = useState(false);
 
   const navigate = useNavigate();
   let params = useParams();
@@ -26,8 +27,13 @@ export default function ClassroomAllContentsPage(props) {
         classId: params.classroomId,
         type: props.type,
       });
+      if (res.status === "fail") {
+        console.log("fetching failed");
+        return;
+      }
 
       setContents(res.data.contents);
+      setIsFetch(true);
     }
     initial();
   }, []);
@@ -88,22 +94,35 @@ export default function ClassroomAllContentsPage(props) {
             <span className="block text-2xl text-gray-600">Loading</span>
           </div>
         )}
-        {contents.map((el, index) => (
+        {isFetch &&
+          contents.map((el, index) => (
+            <div
+              key={index}
+              onClick={() => {
+                navigate(`${el.id}`);
+              }}
+              className={`bg-[#f5f5f5] hover:bg-[#f0f0f0] transition-all ease-in-out cursor-pointer text-gray-600 text-xl w-[25rem] py-5 px-5 mt-4  items-center rounded-sm`}
+            >
+              <span className={` text-2xl text-gray-600`}>{el.title}</span>
+              {false && checkType("assignment") && (
+                <span className={` ${textColorDict[props.type]} `}>
+                  กำหนดส่ง {el.dueDate}
+                </span>
+              )}
+            </div>
+          ))}
+        {!isFetch && (
           <div
-            key={index}
-            onClick={() => {
-              navigate(`${el.id}`);
-            }}
-            className={`bg-[#f5f5f5] hover:bg-[#f0f0f0] transition-all ease-in-out cursor-pointer text-gray-600 text-xl w-[25rem] py-5 px-5 mt-4  items-center rounded-sm`}
+            className={`animate-pulse bg-gray-200 hover:bg-[#f0f0f0] transition-all ease-in-out cursor-pointer text-gray-600 text-xl w-[25rem] py-5 px-5 mt-4  items-center rounded-sm`}
           >
-            <span className={` text-2xl text-gray-600`}>{el.title}</span>
+            <span className={`animate-pulse text-2xl text-gray-600 invisible`}>
+              Loading
+            </span>
             {false && checkType("assignment") && (
-              <span className={` ${textColorDict[props.type]} `}>
-                กำหนดส่ง {el.dueDate}
-              </span>
+              <span className={` ${textColorDict[props.type]} `}>Loading</span>
             )}
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

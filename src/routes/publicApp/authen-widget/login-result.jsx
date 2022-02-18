@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { lineUserAuthen } from "../../../services/authentication";
 
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../../redux/root-action";
 
@@ -13,6 +13,7 @@ export default function LoginResult() {
   const [searchParams] = useSearchParams();
 
   //Redux
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const {
     setCurrentOperation,
@@ -43,7 +44,7 @@ export default function LoginResult() {
         setCurrentUser(res.data.user);
         setCurrentMenu(`home`);
         window.sessionStorage.accessToken = res.token;
-        navigate("/app");
+        navigate(state.app.currentLoginTo);
       } catch (e) {
         console.log(e);
         setCurrentAlert({
@@ -59,59 +60,26 @@ export default function LoginResult() {
   }, []);
 
   return (
-    <div className="grid justify-center  sm:shadow-md sm:rounded-lg landing-animation-right w-[400px] h-[600px] py-10 invisible">
+    <div className="grid justify-center  sm:rounded-lg landing-animation-right w-[400px] h-[600px] py-10">
       <span className="block text-4xl  mb-10 text-darkcloud font-kanit text-center">
-        เข้าสู่ระบบ
+        กำลังเข้าสู่ระบบ
       </span>
-      <div className="relative h-52">
-        <img src="../images/teacher2.webp" alt="" className="absolute" />
+      <div className="relative">
+        <svg
+          className="animate-spin"
+          width="256px"
+          height="256px"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#06C755"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M13.917 7A6.002 6.002 0 0 0 2.083 7H1.071a7.002 7.002 0 0 1 13.858 0h-1.012z"
+          />
+        </svg>
       </div>
-      {false && (
-        <>
-          <button
-            className="bg-line text-white mt-5 px-10 py-4 text-xl font-kanit rounded-md relative landing-animation-right hover:bg-[#09d45e]"
-            onClick={() => {}}
-          >
-            <span className="px-2">เข้าสู่ระบบด้วย LINE</span>
-          </button>
-          <button
-            className="bg-skyblue text-white mt-5 px-10 py-4 text-xl font-kanit rounded-md landing-animation-right"
-            onClick={() => {}}
-          >
-            <span>สมัครสมาชิกใหม่</span>
-          </button>
-        </>
-      )}
-      <button
-        className="bg-line text-white mt-5 px-10 py-4 text-xl font-kanit rounded-md relative landing-animation-right hover:bg-[#09d45e]"
-        onClick={() => {}}
-      >
-        <span className="px-2">เข้าสู่ระบบด้วย Line</span>
-      </button>
-      {
-        //DEVELOPMENT ONLY
-        <>
-          <button
-            className="text-green-500 text-1xl"
-            onClick={() => {
-              setCurrentOperation("login");
-              navigate(`result?code=QWERTY`);
-            }}
-          >
-            LOGIN AS FAKEUSER
-          </button>
-          <button
-            className="text-green-500 text-1xl"
-            onClick={() => {
-              setCurrentOperation("login");
-              navigate(`result?code=YUIOP`);
-            }}
-          >
-            LOGIN AS FAKEUSER2
-          </button>
-        </>
-        //DEVELOPMENT ONLY END
-      }
     </div>
   );
 }

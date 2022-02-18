@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 //Redux
 import { useDispatch } from "react-redux";
@@ -8,11 +9,16 @@ import { actionCreators } from "../../../redux/root-action";
 
 export default function LoginLine() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const clientRoute = `https://smart-classroom-demo.vercel.app/`;
 
   //Redux
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { setCurrentOperation } = bindActionCreators(actionCreators, dispatch);
+  const { setCurrentOperation, setCurrentLoginTo } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
 
   const handleLineLogin = () => {
     setCurrentOperation("login");
@@ -53,6 +59,11 @@ export default function LoginLine() {
     async function initial() {
       try {
         console.log(process.env);
+        if (searchParams.get("loginTo")) {
+          setCurrentLoginTo(searchParams.get("loginTo"));
+        } else {
+          setCurrentLoginTo("/app");
+        }
       } catch {}
     }
     initial();

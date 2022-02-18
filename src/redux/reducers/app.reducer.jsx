@@ -2,10 +2,16 @@ const INITIAL_STATE = {
   currentMenu: "home",
   currentOperation: "none",
   currentAlert: null,
+  currentLoginTo: "",
 };
 
 const appReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case "SET_CURRENT_LOGIN_TO":
+      return {
+        ...state,
+        currentLoginTo: action.payload,
+      };
     case "SET_CURRENT_MENU":
       return {
         ...state,

@@ -1,5 +1,6 @@
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
+import liff from "@line/liff";
 
 //Routes
 import PublicApp from "./routes/publicApp";
@@ -32,6 +33,17 @@ import LoginResult from "./routes/publicApp/authen-widget/login-result";
 import ClassroomBotSettingPage from "./routes/classroomApp/classroom/classroom-bot-setting-page";
 
 function App() {
+  liff
+    .init({
+      liffId: "1656696595-3dzBR2wb", // Use own liffId
+    })
+    .then(() => {
+      // start to use LIFF's api
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   return (
     <div className="relative">
       <AppAlert />
