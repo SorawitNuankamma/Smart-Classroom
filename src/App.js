@@ -35,7 +35,7 @@ import ClassroomBotSettingPage from "./routes/classroomApp/classroom/classroom-b
 function App() {
   liff
     .init({
-      liffId: "1656696595-3dzBR2wb", // Use own liffId
+      liffId: "1656907747-ZYdAAnyB", // Use own liffId
     })
     .then(() => {
       // start to use LIFF's api
