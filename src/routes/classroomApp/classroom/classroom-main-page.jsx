@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 
 //Service
 
-const btnStyle = `bg-[#f5f5f5] hover:bg-[#f0f0f0] transition-all ease-in-out cursor-pointer text-gray-600 text-xl w-[25rem] py-5 px-5 mt-4 grid grid-cols-[25px_1fr] items-center rounded-sm`;
+const btnStyle = `bg-[#f5f5f5] hover:bg-[#f0f0f0] transition-all ease-in-out cursor-pointer text-gray-600 text-xl  py-5 px-5 mt-4 grid grid-cols-[25px_1fr] items-center rounded-sm`;
 
 export default function ClassroomMainPage() {
   const state = useSelector((state) => state);

@@ -41,7 +41,7 @@ export default function ClassroomPage() {
     <div
       className={`transition-all duration-[125ms] flex flex-col ${initState} w-full`}
     >
-      <div className={`color-${classroom.color} w-full ml-5 py-5`}>
+      <div className={`color-${classroom.color} w-full  py-5`}>
         <div className={`m-12 font-kanit `}>
           <span className={`text-5xl text-white w-screen `}>
             {classroom.name}

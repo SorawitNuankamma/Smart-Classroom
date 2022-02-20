@@ -14,7 +14,6 @@ export default function PublicApp() {
     <>
       <PublicNavbar />
       <Outlet />
-      <Footer />
     </>
   );
 }
