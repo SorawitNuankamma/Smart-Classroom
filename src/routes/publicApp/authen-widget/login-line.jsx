@@ -76,7 +76,7 @@ export default function LoginLine() {
       </span>
       <div className="grid justify-center content-center">
         <img
-          src="../../../images/users.svg"
+          src="https://cdn.filestackcontent.com/UeOsXCetRxeQtdS29r5b"
           alt="user_icon"
           width="192px"
           height="auto"

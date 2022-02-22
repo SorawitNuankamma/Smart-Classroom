@@ -61,16 +61,16 @@ export default function ClassroomNavbar() {
   const handleMenuChange = async (menu) => {
     let template = {
       home: "text-azure bg-titanium border-r-azure border-r-4",
-      myClassroom: "text-gray-600",
-      joinClassroom: "text-gray-600",
-      userSetting: "text-gray-600",
-      signout: "text-gray-600",
+      myClassroom: "text-gray-600 ",
+      joinClassroom: "text-gray-600 ",
+      userSetting: "text-gray-600 ",
+      signout: "text-gray-600 ",
     };
     for (let i in template) {
       if (i === menu) {
         template[i] = "text-azure bg-titanium border-r-azure border-r-4";
       } else {
-        template[i] = "text-gray-600";
+        template[i] = "text-gray-600 ";
       }
     }
     setMenuStyle(template);
@@ -95,39 +95,45 @@ export default function ClassroomNavbar() {
         <div>
           <div className="fixed flex flex-col transition ease-in-out h-full w-[300px] bg-silver -translate-x-full laptop:translate-x-0  laptop:bottom-0 laptop:left-0 ">
             <span className="font-bold text-3xl  text-royal px-10 py-8 font-kanit">
-              Smart <span className="text-golden">Classroom</span>
+              <img
+                className="w-40 py-5"
+                src="https://cdn.filestackcontent.com/wUVKk2vERlO59ChmiCJv"
+                height="64px"
+                width="auto"
+                alt="logo"
+              />
             </span>
             <button
               onClick={() => handleMenuClick("home")}
-              className={`grid grid-cols-[20px_1fr] items-center transition-all text-xl  px-10 py-6 text-left font-kanit ${menuStyle.home} `}
+              className={`my-2 grid grid-cols-[20px_1fr] items-center transition-all text-xl  px-10 py-6 text-left font-kanit ${menuStyle.home} `}
             >
               <HomeIcon />
               <span className="ml-3">หน้าหลัก</span>
             </button>
             <button
               onClick={() => handleMenuClick("myClassroom")}
-              className={`grid grid-cols-[20px_1fr] transition-all	text-xl  px-10 py-6 text-left font-kanit ${menuStyle.myClassroom}`}
+              className={`my-2 grid grid-cols-[20px_1fr] transition-all	text-xl  px-10 py-6 text-left font-kanit ${menuStyle.myClassroom}`}
             >
               <SchoolIcon />
               <span className="ml-3">ห้องเรียนของฉัน</span>
             </button>
             <button
               onClick={() => handleMenuClick("joinClassroom")}
-              className={`grid grid-cols-[20px_1fr] transition-all	text-xl  px-10 py-6 text-left font-kanit ${menuStyle.joinClassroom}`}
+              className={`my-2 grid grid-cols-[20px_1fr] transition-all	text-xl  px-10 py-6 text-left font-kanit ${menuStyle.joinClassroom}`}
             >
               <AddCircleOutlineIcon />
               <span className="ml-3">เข้าร่วมห้องเรียน</span>
             </button>
             <button
               onClick={() => handleMenuClick("userSetting")}
-              className={`grid grid-cols-[20px_1fr] transition-all	text-xl  px-10 py-6 text-left font-kanit ${menuStyle.userSetting}`}
+              className={`my-2 grid grid-cols-[20px_1fr] transition-all	text-xl  px-10 py-6 text-left font-kanit ${menuStyle.userSetting}`}
             >
               <SettingsIcon />
               <span className="ml-3">ตั้งค่าบัญชี</span>
             </button>
             <button
               onClick={() => handleMenuClick("signout")}
-              className={`grid grid-cols-[20px_1fr] transition-all	text-xl  px-10 py-6 text-left font-kanit ${menuStyle.signout}`}
+              className={`my-2 grid grid-cols-[20px_1fr] transition-all	text-xl  px-10 py-6 text-left font-kanit ${menuStyle.signout}`}
             >
               <LogoutIcon />
               <span className="ml-3">ออกจากระบบ</span>

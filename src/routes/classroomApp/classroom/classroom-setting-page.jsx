@@ -9,7 +9,17 @@ import ColorPicker from "../../../components/colorPicker";
 import IntervalPicker from "../../../components/intervalPicker";
 
 //Service
-import { getClassroom } from "../../../services/classroom";
+import { getClassroom, patchClassroom } from "../../../services/classroom";
+
+const timeValue = {
+  Sunday: 0,
+  Monday: 1,
+  Tuesday: 2,
+  Wednesday: 3,
+  Thursday: 4,
+  Friday: 5,
+  Saturday: 6,
+};
 
 export default function ClassroomSettingPage() {
   const [classroom, setClassroom] = useState([]);
@@ -19,6 +29,7 @@ export default function ClassroomSettingPage() {
   const [descField, setDescField] = useState(""); // Submit State
   const [ruleField, setRuleField] = useState(""); // Submit State
   const [classColor, setClassColor] = useState("green"); // Submit State
+  const [meetingLink, setMeetingLink] = useState("");
   const [timeIntervals, setTimeIntervals] = useState([]); // Submit State
 
   const navigate = useNavigate();
@@ -30,19 +41,49 @@ export default function ClassroomSettingPage() {
       // Fetch
       const res = await getClassroom(params.classroomId);
       setClassroom(res.data.classroom);
+      setNameField(res.data.classroom.name);
+      setDescField(res.data.classroom.description);
+      setRuleField(res.data.classroom.rules);
       setClassColor(res.data.classroom.color);
+      setMeetingLink(res.data.classroom.meetingLink);
+      setTimeIntervals(res.data.classroom.timetable);
+      console.log(res.data.classroom);
       setIsFetch(true);
     }
     initial();
   }, []);
 
-  const handlePatchClassroom = () => {
-    const template = {
+  const handlePatchClassroom = async () => {
+    //Validate data
+    //packing data
+    let sortedInterval = timeIntervals.slice().sort((a, b) => {
+      if (timeValue[a[0]] < timeValue[b[0]]) {
+        return -1;
+      }
+      if (timeValue[a[0]] < timeValue[b[0]]) {
+        return 1;
+      }
+      return 0;
+    });
+
+    const classroomObject = {
       name: nameField,
-      color: classColor,
       description: descField,
+      color: classColor,
       rules: ruleField,
+      meetingLink: meetingLink,
+      timetable: sortedInterval,
     };
+    console.log(classroomObject);
+
+    let res = await patchClassroom(classroomObject, classroom.id);
+    console.log(res);
+    if (res.status === "success") {
+      console.log(res);
+      navigate(`../classroom-information`);
+    } else {
+      navigate(`../`);
+    }
   };
 
   return (
@@ -77,7 +118,7 @@ export default function ClassroomSettingPage() {
                     shadow-sm
                     focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                   "
-              value={classroom.name}
+              value={nameField}
               placeholder="classroom name"
               onChange={(e) => {
                 setNameField(e.target.value);
@@ -96,7 +137,7 @@ export default function ClassroomSettingPage() {
                     shadow-sm
                     focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                   "
-              value={classroom.description}
+              value={descField}
               rows="3"
               spellCheck="false"
               placeholder="a brief description of the classroom"
@@ -104,6 +145,28 @@ export default function ClassroomSettingPage() {
                 setDescField(e.target.value);
               }}
             ></textarea>
+          </label>
+          <label className="block mt-8">
+            <span className="text-gray-700">
+              Link สำหรับการ meeting เช่น zoom หรือ google meet
+            </span>
+            <input
+              type="text"
+              className="
+                    mt-1
+                    block
+                    w-full
+                    rounded-md
+                    border-gray-300
+                    shadow-sm
+                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                  "
+              placeholder="meeting url"
+              value={meetingLink}
+              onChange={(e) => {
+                setMeetingLink(e.target.value);
+              }}
+            ></input>
           </label>
           <label className="block mt-8">
             <span className="text-gray-700">กฎของรายวิชา</span>
@@ -118,7 +181,7 @@ export default function ClassroomSettingPage() {
                     focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                   "
               rows="3"
-              value={classroom.rules}
+              value={ruleField}
               spellCheck="false"
               placeholder="List of classroom rules"
               onChange={(e) => {
@@ -127,8 +190,9 @@ export default function ClassroomSettingPage() {
             ></textarea>
           </label>
           <ColorPicker callback={setClassColor} state={classColor} />
+          <IntervalPicker callback={setTimeIntervals} state={timeIntervals} />
           <button
-            className={`mt-5 px-5 py-3 rounded-md shadow-lg text-xl text-white mr-3 mt-2 bg-green-500`}
+            className={`mt-5 px-5 py-3 rounded-md shadow-lg text-xl text-white mr-3 bg-green-500`}
             onClick={handlePatchClassroom}
           >
             บันทึกข้อมูล

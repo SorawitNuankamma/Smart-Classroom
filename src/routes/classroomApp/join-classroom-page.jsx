@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 //Redux
 import { useDispatch } from "react-redux";
@@ -11,10 +11,9 @@ import { useSelector } from "react-redux";
 import { joinClassroom } from "../../services/classroom";
 
 export default function JoinClassroomPage() {
-  const [accessCode, setAccessCode] = useState({
-    name: "",
-  });
+  const [accessCode, setAccessCode] = useState("");
   const [initState, setInitState] = useState("opacity-0	translate-x-10	");
+  const [searchParams] = useSearchParams();
 
   const navigate = useNavigate();
 
@@ -55,6 +54,9 @@ export default function JoinClassroomPage() {
   useEffect(() => {
     async function initial() {
       try {
+        if (searchParams.get("code")) {
+          setAccessCode(searchParams.get("code"));
+        }
         setInitState("opacity-100 translate-x-0");
       } catch {
         navigate("/login");
@@ -77,6 +79,7 @@ export default function JoinClassroomPage() {
         <span className="text-2xl">รหัสห้องเรียน</span>
         <input
           type="text"
+          value={accessCode}
           className="
                     mt-6
                     block

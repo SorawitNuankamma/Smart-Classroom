@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 
 //Service
 
-const btnStyle = `bg-[#f5f5f5] hover:bg-[#f0f0f0] transition-all ease-in-out cursor-pointer text-gray-600 text-xl  py-5 px-5 mt-4 grid grid-cols-[25px_1fr] items-center rounded-sm`;
+const btnStyle = `bg-[#f5f5f5] hover:bg-[#f0f0f0] transition-all ease-in-out cursor-pointer text-gray-600 text-xl  py-5 px-5 mt-4 grid grid-cols-[25px_1fr] items-center rounded-sm w-72 lg:w-96 shadow-md rounded-md`;
 
 export default function ClassroomMainPage() {
   const state = useSelector((state) => state);
@@ -73,17 +73,19 @@ export default function ClassroomMainPage() {
             </span>
             <span className="ml-8">ข้อมูลของห้องเรียน</span>
           </div>
-          <div
-            className={btnStyle}
-            onClick={() => {
-              handleRouting(`classroom-my-profile`);
-            }}
-          >
-            <span className="text-azure">
-              <PersonIcon fontSize="large" />
-            </span>
-            <span className="ml-8">ข้อมูลของฉันในห้องเรียน</span>
-          </div>
+          {false && (
+            <div
+              className={btnStyle}
+              onClick={() => {
+                handleRouting(`classroom-my-profile`);
+              }}
+            >
+              <span className="text-azure">
+                <PersonIcon fontSize="large" />
+              </span>
+              <span className="ml-8">ข้อมูลของฉันในห้องเรียน</span>
+            </div>
+          )}
           <div
             className={btnStyle}
             onClick={() => {
@@ -159,19 +161,21 @@ export default function ClassroomMainPage() {
               </span>
               <span className="ml-8">ตั้งค่าห้องเรียน</span>
             </div>
-            <div
-              className={btnStyle}
-              onClick={() => {
-                handleRouting(`classroom-bot-setting`);
-              }}
-            >
-              <span className="text-azure">
-                <SettingsIcon fontSize="large" />
-              </span>
-              <span className="ml-8">
-                ตั้งค่า Bot และการเชื่อมต่อกับกลุ่มไลน์
-              </span>
-            </div>
+            {false && (
+              <div
+                className={btnStyle}
+                onClick={() => {
+                  handleRouting(`classroom-bot-setting`);
+                }}
+              >
+                <span className="text-azure">
+                  <SettingsIcon fontSize="large" />
+                </span>
+                <span className="ml-8">
+                  ตั้งค่า Bot และการเชื่อมต่อกับกลุ่มไลน์
+                </span>
+              </div>
+            )}
           </div>
         )}
       </div>

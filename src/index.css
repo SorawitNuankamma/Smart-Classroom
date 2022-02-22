@@ -596,6 +596,10 @@ select {
 .m-12 {
   margin: 3rem;
 }
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 .mx-12 {
   margin-left: 3rem;
   margin-right: 3rem;
@@ -727,6 +731,9 @@ select {
 .h-16 {
   height: 4rem;
 }
+.h-10 {
+  height: 2.5rem;
+}
 .h-32 {
   height: 8rem;
 }
@@ -758,6 +765,9 @@ select {
 .w-\[300px\] {
   width: 300px;
 }
+.w-40 {
+  width: 10rem;
+}
 .w-72 {
   width: 18rem;
 }
@@ -769,9 +779,6 @@ select {
 }
 .w-32 {
   width: 8rem;
-}
-.w-40 {
-  width: 10rem;
 }
 .w-128 {
   width: 32rem;
@@ -1118,13 +1125,17 @@ select {
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
 }
-.py-5 {
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 .px-3 {
   padding-left: 0.75rem;
@@ -1315,6 +1326,10 @@ select {
 .text-sky-500 {
   --tw-text-opacity: 1;
   color: rgb(14 165 233 / var(--tw-text-opacity));
+}
+.text-\[\#30A0E0\] {
+  --tw-text-opacity: 1;
+  color: rgb(48 160 224 / var(--tw-text-opacity));
 }
 .text-\[\#265A55\] {
   --tw-text-opacity: 1;
@@ -1545,6 +1560,10 @@ select {
 
   .lg\:w-max {
     width: max-content;
+  }
+
+  .lg\:w-96 {
+    width: 24rem;
   }
 
   .lg\:grid-cols-2 {

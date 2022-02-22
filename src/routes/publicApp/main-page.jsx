@@ -9,7 +9,7 @@ export default function MainPage() {
         <div className="landing-animation-right">
           <h1 className="text-5xl lg:text-7xl font-bold mb-10 text-blue-600/75">
             <span className="block text-royal">Smart</span>
-            <span className="block text-golden">Classroom</span>
+            <span className="block text-[#30A0E0]">Classroom</span>
           </h1>
           <p className="text-blue-600/75 max-w-md text-lg text-darkcloud font-kanit">
             สร้างและบริหารห้องเรียนออนไลน์อย่างง่าย
@@ -26,7 +26,7 @@ export default function MainPage() {
         </div>
         <div className="landing-animation-left">
           <img
-            src="./images/classroom_vector.webp"
+            src="https://cdn.filestackcontent.com/HOBcOnS7R0Cb03Qu92Hd"
             width="739px"
             height="auto"
             alt="classroom_image"

@@ -32,9 +32,9 @@ export default function HomePage(props) {
     <div
       className={`transition-all duration-500 flex flex-col ${initState} w-96`}
     >
-      <div className="m-12 space-y-4 font-kanit">
+      <div className="m-12 font-kanit">
         <span className="text-5xl text-gray-600 ">
-          Welcome {state.user.currentUser.name}
+          สวัสดีคุณ {state.user.currentUser.name}
         </span>
       </div>
     </div>
