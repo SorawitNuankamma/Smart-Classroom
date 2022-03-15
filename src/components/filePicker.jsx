@@ -6,10 +6,15 @@ import FileElement from "./fileElement";
 import "../styles/colors.css";
 import ClearIcon from "@mui/icons-material/Clear";
 
-import { postSubmission, getMySubmission } from "../services/submission";
+import {
+  postSubmission,
+  getMySubmission,
+  patchSubmission,
+} from "../services/submission";
 import { useSelector } from "react-redux";
 
 import { postFile, getFiles } from "../services/file";
+import useSendLineMessage from "../hooks/useSendLineMessage";
 
 const DICT = {
   student: {
@@ -30,10 +35,12 @@ export default function FilePicker(props) {
 
   const [render, setRender] = useState(false);
   const [submission, setSubmission] = useState();
-  const [isSubmission, setIsSubmission] = useState(false);
+  const [isHavingSubmission, setIsHavingSubmission] = useState(false);
   const [submissionFiles, setSubmissionFiles] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   let params = useParams();
+  const sendLineMessage = useSendLineMessage();
 
   //Filestack dependencies
   const client = filestack.init(`ABXuU7bayRkeVh8mmyNAAz`);
@@ -72,11 +79,10 @@ export default function FilePicker(props) {
   // TODO if there are none file in submission yet, create submission on db and use it
   useEffect(() => {
     async function initial() {
-      console.log(submission);
       const res = await getMySubmission({ contentId: params.contentId });
       if (res.status === "success") {
-        setIsSubmission(true);
         setSubmission(res.data.submission);
+        setIsSubmitted(res.data.submission.isSubmitted);
         // Fetch file that belong to this submission
         const filesRes = await getFiles({
           submissionId: res.data.submission.id,
@@ -84,8 +90,8 @@ export default function FilePicker(props) {
         });
         if (filesRes.status === "success") {
           setSubmissionFiles(filesRes.data.files);
-          console.log(submission);
         }
+        setIsHavingSubmission(true);
       }
     }
     initial();
@@ -99,43 +105,64 @@ export default function FilePicker(props) {
     };
   }, []);
   */
+  const handleConfirmSubmitting = async () => {
+    const res = await patchSubmission(
+      { isSubmitted: !isSubmitted },
+      submission.id
+    );
+    if (res.status === "success") {
+      if (!isSubmitted && state.user.currentClassroomRole === "Student") {
+        await sendLineMessage({
+          targetId: state.user.currentUser.lineUserId,
+          text: `ส่งงานใน ${props.contentName} สำเร็จ`,
+        });
+      }
+      setIsSubmitted(!isSubmitted);
+    }
+  };
 
   const handleCreateSubmission = async () => {
     const res = await postSubmission({
       userId: state.user.currentUser.id,
       classroomId: params.classroomId,
       contentId: params.contentId,
-      isStudent: true,
+      isStudent: state.user.currentClassroomRole === "Student",
     });
     console.log(res);
     setSubmission(res.data.newSubmission);
-    setIsSubmission(true);
+    setIsHavingSubmission(true);
     setRender(!render);
   };
 
   return (
     <div className="mt-8">
       <span className="block text-2xl text-gray-600">
-        ส่งงานที่ได้รับมอบหมาย
+        {state.user.currentClassroomRole === "Student"
+          ? "ส่งงานที่ได้รับมอบหมาย"
+          : "แนบไฟล์ไปกับเนื้อหา"}
       </span>
-      {!isSubmission && (
+      {!isHavingSubmission && (
         <>
           <span className="block mt-2 text-gray-400 text-sm">
-            หากยังไม่มีการส่งงาน สามารถสร้างช่องทางการส่งงานได้ด้านล่าง
+            {state.user.currentClassroomRole === "Student"
+              ? "หากยังไม่มีการส่งงาน สามารถสร้างช่องทางการส่งงานได้ด้านล่าง"
+              : "หากยังไม่มีการแนบไฟล์ สามารถสร้างช่องทางการแนบไฟล์ได้ด้านล่าง"}
           </span>
           <button
             className="mt-5 bg-skyblue px-4 py-2 text-white rounded-md hover:bg-blue-600"
             onClick={handleCreateSubmission}
           >
             สร้างช่องทางการส่งงาน
+            {state.user.currentClassroomRole === "Student"
+              ? "สร้างช่องทางการส่งงาน"
+              : "สร้างช่องทางการแนบไฟล์"}
           </button>
         </>
       )}
-      {isSubmission && (
+      {isHavingSubmission && (
         <>
           <span className="block mt-2 text-gray-400 text-sm">
-            ไฟล์ที่ถูก upload ขึ้นมาจะถือว่าเป็นการส่งงาน
-            นักเรียนสามารถยกเลิกส่งงานได้โดยการคลิกลบไฟล์ในช่องการส่งงานด้านล่าง
+            หากทำการยืนยันแล้ว จะไม่สามารถแก้ไขได้จนกว่าจะยกเลิกการยืนยัน
           </span>
           <div className="mt-5 bg-gray-50 min-h-[10rem] max-w-[45rem] py-1">
             {submissionFiles.map((el, index) => (
@@ -143,6 +170,7 @@ export default function FilePicker(props) {
                 key={index}
                 index={index}
                 el={el}
+                disableDelete={isSubmitted}
                 onSuccess={() => {
                   let tempSubmissionFiles = submissionFiles;
                   tempSubmissionFiles.splice(index, 1);
@@ -154,12 +182,29 @@ export default function FilePicker(props) {
           </div>
           <div className="mt-5 mb-5">
             <button
-              className="bg-skyblue px-4 py-2 text-white rounded-md hover:bg-blue-600"
+              className={`${
+                isSubmitted ? "color-gray" : "bg-skyblue"
+              } px-4 py-2 text-white rounded-md `}
               onClick={() => {
                 client.picker(options).open();
               }}
+              disabled={isSubmitted}
             >
               เลือกไฟล์
+            </button>
+            <button
+              className={`${
+                isSubmitted ? "color-red" : "color-green"
+              } px-4 py-2 text-white rounded-md  ml-5`}
+              onClick={handleConfirmSubmitting}
+            >
+              {isSubmitted
+                ? state.user.currentClassroomRole === "Student"
+                  ? "ยกเลิกการส่งงาน"
+                  : "ยกเลิกการแนบไฟล์"
+                : state.user.currentClassroomRole === "Student"
+                ? "ยืนยันการส่งงาน"
+                : "ยืนยันการแนบไฟล์"}
             </button>
           </div>
         </>

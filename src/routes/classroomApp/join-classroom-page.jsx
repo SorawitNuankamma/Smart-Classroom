@@ -14,19 +14,23 @@ export default function JoinClassroomPage() {
   const [accessCode, setAccessCode] = useState("");
   const [initState, setInitState] = useState("opacity-0	translate-x-10	");
   const [searchParams] = useSearchParams();
+  const [nameField, setNameField] = useState("");
+  const [studentCodeField, setStudentCodeField] = useState("");
+  const [emailField, setEmailField] = useState("");
 
   const navigate = useNavigate();
 
   //Redux
   const dispatch = useDispatch();
-  const { setCurrentAlert, setCurrentMenu } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+  const { setCurrentAlert, setCurrentMenu, setCurrentClassroomRole } =
+    bindActionCreators(actionCreators, dispatch);
 
   const handleJoinClassroom = async () => {
     const res = await joinClassroom({
       accessCode: accessCode,
+      name: nameField,
+      studentCode: studentCodeField,
+      email: emailField,
     });
     console.log(res);
     if (res.status === "success") {
@@ -37,6 +41,7 @@ export default function JoinClassroomPage() {
         message: "เข้าร่วมห้องเรียนสำเร็จ",
         link: null,
       });
+      setCurrentClassroomRole("Student");
       navigate(`../my-classroom/${res.data.classroom.id}`);
     } else {
       setCurrentMenu("home");
@@ -76,11 +81,12 @@ export default function JoinClassroomPage() {
         <Divider />
       </div>
       <div className="mt-6 font-kanit text-gray-600">
-        <span className="text-2xl">รหัสห้องเรียน</span>
-        <input
-          type="text"
-          value={accessCode}
-          className="
+        <div className="mt-5">
+          <span className="text-2xl">รหัสห้องเรียน</span>
+          <input
+            type="text"
+            value={accessCode}
+            className="
                     mt-6
                     block
                     rounded-md
@@ -89,11 +95,73 @@ export default function JoinClassroomPage() {
                     focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                     w-fit
                   "
-          placeholder="Classroom Code"
-          onChange={(e) => {
-            setAccessCode(e.target.value);
-          }}
-        ></input>
+            placeholder="Classroom Code"
+            onChange={(e) => {
+              setAccessCode(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div className="mt-5">
+          <span className="text-2xl">ชื่อและนามสกุล</span>
+          <input
+            type="text"
+            value={nameField}
+            className="
+                    mt-6
+                    block
+                    rounded-md
+                    border-gray-300
+                    shadow-sm
+                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                    w-fit
+                  "
+            placeholder="ชื่อและนามสกุล"
+            onChange={(e) => {
+              setNameField(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div className="mt-5">
+          <span className="text-2xl">รหัสนักเรียน</span>
+          <input
+            type="text"
+            value={studentCodeField}
+            className="
+                    mt-6
+                    block
+                    rounded-md
+                    border-gray-300
+                    shadow-sm
+                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                    w-fit
+                  "
+            placeholder="รหัสนักเรียน"
+            onChange={(e) => {
+              setStudentCodeField(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div className="mt-5">
+          <span className="text-2xl">อีเมลล์</span>
+          <input
+            type="text"
+            value={emailField}
+            className="
+                    mt-6
+                    block
+                    rounded-md
+                    border-gray-300
+                    shadow-sm
+                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                    w-fit
+                  "
+            placeholder="อีเมลล์"
+            onChange={(e) => {
+              setEmailField(e.target.value);
+            }}
+          ></input>
+        </div>
+
         <button
           className="mt-6 px-5 py-3 bg-blue-600 text-white font-kanit rounded-md hover:bg-blue-700 transition-all ease-in-out"
           onClick={handleJoinClassroom}

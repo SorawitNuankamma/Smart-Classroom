@@ -74,7 +74,7 @@ export default function ClassroomAllContentsPage(props) {
       </div>
       <div className="mt-8 font-kanit flex flex-row items-center">
         <span className="text-4xl text-gray-600 ">{typeDict[props.type]}</span>
-        {state.user.currentClassroomRole !== "student" && (
+        {state.user.currentClassroomRole !== "Student" && (
           <button
             className="ml-5 text-azure"
             onClick={() => {
@@ -95,6 +95,7 @@ export default function ClassroomAllContentsPage(props) {
           </div>
         )}
         {isFetch &&
+          contents.length !== 0 &&
           contents.map((el, index) => (
             <div
               key={index}
@@ -111,6 +112,11 @@ export default function ClassroomAllContentsPage(props) {
               )}
             </div>
           ))}
+        {isFetch && contents.length === 0 && (
+          <span className="text-gray-600">
+            สามารถสร้าง{typeDict[props.type]}ใหม่ได้จากเมนูด้านบน
+          </span>
+        )}
         {!isFetch && (
           <div
             className={`animate-pulse bg-gray-200 hover:bg-[#f0f0f0] transition-all ease-in-out cursor-pointer text-gray-600 text-xl w-[25rem] py-5 px-5 mt-4  items-center rounded-sm`}

@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../../components/button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import Divider from "@mui/material/Divider";
+import { DataGrid } from "@mui/x-data-grid";
 
 import SmartTable from "../../../components/smartTable";
+import ActionTable from "../../../components/actionTable";
 
 //Redux
 import { useSelector } from "react-redux";
@@ -13,53 +15,61 @@ import { useSelector } from "react-redux";
 //Service
 import { getClassroom, patchClassroom } from "../../../services/classroom";
 
-// Manually Set for each page
-const columnObject = {
-  name: {
-    name: "ชื่อ",
-    type: "link",
-    sortAble: true,
-    sortInvert: true,
-  },
-  code: {
-    name: "รหัสนักเรียน",
-    type: "number",
-    sortAble: true,
-    sortInvert: false,
-  },
-  role: {
-    name: "บทบาทในห้องเรียน",
-    type: "editField",
-    sortAble: true,
-    sortInvert: true,
-  },
-  action: {
-    name: "แก้ไข",
-    type: "action",
-    sortAble: false,
-    sortInvert: false,
-  },
-};
+//Class
+import Field from "../../../classes/field";
+import EnhancedTable from "../../../components/enhancedTable";
+import EditModal from "../../../components/editModal";
 
-//Testing data
-const rowsObject = [
+const columns = [
+  { field: "id", headerName: "ID", width: 90 },
   {
-    name: {
-      text: "sorawit",
-      link: `61e3751ead076820f8389034`,
-    },
-    code: 11452,
-    role: "student",
-    action: "delete",
+    field: "name",
+    headerName: "ชื่อ",
+    width: 150,
+    editable: false,
   },
   {
-    name: {
-      text: "sorawit",
-      link: `61e3751ead076820f8389034`,
-    },
-    code: 11452,
-    role: "student",
-    action: "delete",
+    field: "studentCode",
+    headerName: "รหัสนักเรียน",
+    type: "number",
+    width: 150,
+    editable: false,
+  },
+  {
+    field: "email",
+    headerName: "อีเมลล์",
+    width: 150,
+    editable: false,
+  },
+  {
+    field: "classroomRole",
+    headerName: "บทบาท",
+    width: 110,
+    editable: false,
+  },
+];
+
+const editableColumn = [
+  {
+    value: "name",
+    title: "ชื่อ",
+    type: "field",
+  },
+  {
+    value: "studentCode",
+    title: "รหัสนักเรียน",
+    type: "field",
+  },
+  {
+    value: "email",
+    title: "อีเมลล์",
+    type: "field",
+  },
+  {
+    value: "classroomRole",
+    title: "บทบาท",
+    type: "select",
+    selectOption: ["Student", "TA", "Teacher"],
   },
 ];
 
@@ -67,10 +77,35 @@ export default function ClassroomAllMembersPage(props) {
   const state = useSelector((state) => state);
   const [classroom, setClassroom] = useState([]);
   const [fetchStatus, setFetchStatus] = useState(false);
-  const [rows, setRows] = useState();
+  const usersArrayMapper = useRef({});
+  //const [rows, setRows] = useState();
+  const sortByColumnName = useRef(null);
+  const columnSortInvert = useRef({
+    0: false,
+    1: false,
+    2: false,
+    3: false,
+  });
 
   const navigate = useNavigate();
   let params = useParams();
+
+  const handleCallback = async (field) => {
+    console.log(field);
+    // clone users array
+    let usersClone = JSON.parse(JSON.stringify(classroom.users));
+    if (field.isDeleting) {
+      usersClone.splice(usersArrayMapper.current[field.id], 1);
+    } else {
+      usersClone[usersArrayMapper.current[field.id]][field.property] =
+        field.value;
+    }
+    let res = await patchClassroom({ users: usersClone }, classroom.id);
+    // update table state
+    let classroomClone = JSON.parse(JSON.stringify(classroom));
+    classroomClone.users = usersClone;
+    setClassroom(classroomClone);
+  };
 
   // ComponentDidMount
   useEffect(() => {
@@ -78,45 +113,13 @@ export default function ClassroomAllMembersPage(props) {
       // Fetch
       const res = await getClassroom(params.classroomId);
       setClassroom(res.data.classroom);
-      let rowTemplate = res.data.classroom.users.map((el) => {
-        return {
-          name: {
-            value: el.name,
-            path: `${el.userId}`,
-          },
-          code: {
-            value: el.code,
-          },
-          role: {
-            value: el.classroomRole,
-            type: "selector",
-            selectData: ["Student", "Teacher Assistance", "Teacher"],
-            callback: async (value) => {
-              //get classroom users
-              let newUsersArray = res.data.classroom.users;
-              newUsersArray.map((user) => {
-                if (el === user) {
-                  user.classroomRole = value;
-                }
-              });
-              const response = await patchClassroom(
-                { users: newUsersArray },
-                params.classroomId
-              );
-              if (response.status === "success") {
-                return value;
-              } else {
-                throw new Error("error : request unsuccessful");
-              }
-            },
-            editEnable: el.classroomRole === "Owner" ? false : true,
-          },
-          action: {
-            value: "delete",
-          },
-        };
+      res.data.classroom.users.forEach((user, index) => {
+        usersArrayMapper.current[user.id] = index;
       });
-      setRows(rowTemplate);
+      //let rows = res.data.classroom.users.map((user) => createRow(user));
+      //setRows(rows);
+      //let newRows = renderTable(res.data.classroom.users);
+      //setRows(newRows);
       setFetchStatus(true);
     }
     initial();
@@ -135,20 +138,34 @@ export default function ClassroomAllMembersPage(props) {
       </div>
       <div className="mt-8 font-kanit flex flex-row items-center">
         <span className="text-4xl text-gray-600 ">สมาชิกของห้องเรียน</span>
-        <button
-          className="ml-5 text-azure"
-          onClick={() => {
-            navigate(``);
-          }}
-        >
-          <AddCircleOutlineIcon fontSize="large" />
-        </button>
       </div>
       <div className=" max-w-6xl mt-5">
         <Divider />
       </div>
       <div className="mt-5 max-w-6xl">
-        {fetchStatus && <SmartTable column={columnObject} rows={rows} />}
+        {fetchStatus && (
+          <>
+            <div style={{ height: 400, width: "100%" }}>
+              <DataGrid
+                rows={classroom.users}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                disableSelectionOnClick
+                isCellEditable={(params) => {
+                  console.log(params);
+                }}
+              />
+            </div>
+            <div className="mt-3">
+              <EditModal
+                userIdList={classroom.users.map((el) => el.id)}
+                editableColumn={editableColumn}
+                callback={handleCallback}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

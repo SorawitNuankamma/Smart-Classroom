@@ -17,9 +17,11 @@ import Inventory2Icon from "@mui/icons-material/Inventory2";
 //Component
 import ClassroomMenuButton from "../../../components/classroomMenuButton";
 import FilePicker from "../../../components/filePicker";
+import FileElement from "../../../components/fileElement";
 
 //Service
 import { getContent } from "../../../services/content";
+import { getSubmissionsAndFile } from "../../../services/submission";
 
 export default function ClassroomContentPage() {
   const state = useSelector((state) => state);
@@ -30,6 +32,8 @@ export default function ClassroomContentPage() {
   const [classroom, setClassroom] = useState([]);
   const [fileInput, setFileInput] = useState(React.createRef());
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const [attachFiles, setAttachFiles] = useState([]);
 
   const handleSubmit = () => {
     const reader = new FileReader();
@@ -55,6 +59,7 @@ export default function ClassroomContentPage() {
     async function initial() {
       // Fetch
       const res = await getContent(params.contentId);
+      console.log(res);
       if (res.status === "fail") {
         setCurrentAlert({
           type: "error",
@@ -65,6 +70,18 @@ export default function ClassroomContentPage() {
         navigate(`../`);
         return;
       }
+      const submissionsResponse = await getSubmissionsAndFile({
+        contentId: params.contentId,
+        isStudent: false,
+      });
+      // merge file attrach
+      let attachFilesClone = [];
+      submissionsResponse.data.submissionsAndFiles.forEach((submissions) => {
+        submissions.files.forEach((file) => {
+          attachFilesClone.push(file);
+        });
+      });
+      setAttachFiles(attachFilesClone);
       setContent(res.data.content);
       setContentBody(parse(draftToHtml(JSON.parse(res.data.content.body))));
     }
@@ -108,14 +125,38 @@ export default function ClassroomContentPage() {
       <span className="block mt-2 text-gray-400 text-sm">
         ถูกสร้างขึ้นเมื่อ {content.createDate}
       </span>
+      {content.type === "assignment" && (
+        <>
+          <span className=" mt-2 text-gray-500 text-sm">
+            คะแนนเต็ม{` `}
+            {content.fullScore}
+            {` `}คะแนน{`  |  `}
+          </span>
+          <span className=" mt-2 text-red-400 text-sm">
+            ส่งก่อน{` `}
+            {content.dueDate}
+          </span>
+        </>
+      )}
+
       <div className=" max-w-6xl mt-5">
         <Divider />
       </div>
       <div className="mt-8 font-kanit min-h-[20rem]">{contentBody}</div>
       <div className=" max-w-6xl mt-5">
+        <span>ไฟล์ที่ถูกแนบ</span>
+        {attachFiles.map((el, index) => (
+          <FileElement key={index} index={index} el={el} disableDelete={true} />
+        ))}
+      </div>
+      <div className=" max-w-6xl mt-5">
         <Divider />
       </div>
-      {content.type === "assignment" && <FilePicker />}
+      {(state.user.currentClassroomRole !== "Student" ||
+        (state.user.currentClassroomRole === "Student" &&
+          content.type === "assignment")) && (
+        <FilePicker contentName={content.title} />
+      )}
     </div>
   );
 }

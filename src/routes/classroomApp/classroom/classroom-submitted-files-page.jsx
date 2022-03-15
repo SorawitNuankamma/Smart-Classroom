@@ -23,6 +23,7 @@ export default function ClassroomSubmittedFilesPage(props) {
   const [members, setMembers] = useState();
   const [rows, setRows] = useState();
   const [isFetch, setIsFetch] = useState(false);
+  const [isFetchFailed, setIsFetchFailed] = useState(false);
 
   const navigate = useNavigate();
   let params = useParams();
@@ -31,8 +32,14 @@ export default function ClassroomSubmittedFilesPage(props) {
   useEffect(() => {
     async function initial() {
       // Fetch
-      const res = await getSubmissionsAndFile({ contentId: params.contentId });
-      console.log(res.data.submissionsAndFiles);
+      const res = await getSubmissionsAndFile({
+        contentId: params.contentId,
+        isStudent: true,
+      });
+      if (res.status === "fail") {
+        setIsFetchFailed(true);
+        return;
+      }
       const rowsTemplate = res.data.submissionsAndFiles.map((el) => {
         return {
           name: {
@@ -40,7 +47,7 @@ export default function ClassroomSubmittedFilesPage(props) {
             path: `../classroom-members/${el.member.userId}`,
           },
           code: {
-            value: el.member.code,
+            value: el.member.studentCode,
           },
           status: {
             value: "ส่งแล้ว",
@@ -181,22 +188,13 @@ export default function ClassroomSubmittedFilesPage(props) {
       </div>
       <div className="mt-8 font-kanit flex flex-row items-center">
         <span className="text-4xl text-gray-600 ">ไฟล์ที่ถูกส่งมา</span>
-        {state.user.currentClassroomRole !== "student" && (
-          <button
-            className="ml-5 text-azure"
-            onClick={() => {
-              navigate(`../${props.createPath}`);
-            }}
-          >
-            <AddCircleOutlineIcon fontSize="large" />
-          </button>
-        )}
       </div>
       <div className=" max-w-6xl mt-5">
         <Divider />
       </div>
       <div className="mt-5 max-w-6xl">
         {isFetch && <SmartTable column={columnObject} rows={rows} />}
+        {isFetchFailed && <span>ยังไม่มีไฟล์ถูกส่งมา</span>}
       </div>
     </div>
   );

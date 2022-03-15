@@ -33,6 +33,7 @@ export default function ClassroomCreateContentPage(props) {
   const [dueDate, setDueDate] = useState("none");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [editorHtml, setEditorHtml] = useState("");
+  const [fullScore, setFullScore] = useState(10);
 
   const [action, setAction] = useState("Create");
 
@@ -55,6 +56,7 @@ export default function ClassroomCreateContentPage(props) {
       body: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
       classId: params.classroomId,
       dueDate: dueDate,
+      fullScore: fullScore,
     };
     // IF EDIT
     if (props.edit) {
@@ -118,6 +120,9 @@ export default function ClassroomCreateContentPage(props) {
       </div>
       <div className="mt-8 font-kanit">
         <span className="text-4xl text-gray-600 ">{titleDict[props.type]}</span>
+        <span className="text-gray-500 block">
+          สามารถแนบไฟล์ได้หลังจากการสร้างตัวบทความ
+        </span>
         <label className="block mt-8">
           <span className="text-gray-700">ชื่อบทความ</span>
           <input
@@ -162,12 +167,13 @@ export default function ClassroomCreateContentPage(props) {
           ) /*  BROKEN AT THIS MOMENT */
         }
         {ifAssignment[props.type] && (
-          <div className="mt-8 w-fit">
-            <label className="block ">
-              <span className="text-gray-700">Due Date</span>
-              <input
-                type="date"
-                className="
+          <>
+            <div className="mt-8 w-fit">
+              <label className="block ">
+                <span className="text-gray-700">Due Date</span>
+                <input
+                  type="date"
+                  className="
                     mt-1
                     block
                     w-full
@@ -176,11 +182,34 @@ export default function ClassroomCreateContentPage(props) {
                     shadow-sm
                     focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                   "
-                onChange={(e) => setDueDate(e.target.value)}
-              />
+                  onChange={(e) => setDueDate(e.target.value)}
+                />
+              </label>
+            </div>
+            <label className="block mt-8">
+              <span className="text-gray-700">คะแนนเต็ม</span>
+              <input
+                type="text"
+                className="
+                    mt-1
+                    block
+                    w-20
+                    rounded-md
+                    border-gray-300
+                    shadow-sm
+                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                    max-w-2xl
+                  "
+                placeholder={`full score`}
+                value={fullScore}
+                onChange={(e) => {
+                  setFullScore(e.target.value);
+                }}
+              ></input>
             </label>
-          </div>
+          </>
         )}
+
         <div className="my-8">
           <button
             className="bg-sky-500 px-5 py-3 text-white rounded-md text-lg shadow-md"

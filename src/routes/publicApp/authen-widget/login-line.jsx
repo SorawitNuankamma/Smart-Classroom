@@ -92,7 +92,7 @@ export default function LoginLine() {
       </div>
       {
         //DEVELOPMENT ONLY
-        false && (
+        true && (
           <div>
             <button
               className="text-green-500 text-1xl block"

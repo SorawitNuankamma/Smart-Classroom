@@ -56,6 +56,18 @@ export default function ClassroomMainPage() {
       <div className="mt-8  font-kanit flex flex-row items-center">
         <span className="text-4xl text-gray-600 ">เมนูหลัก</span>
       </div>
+      <div>
+        <button
+          onClick={() => {
+            window.open(
+              "https://cdn.filestackcontent.com/lwqHfwiYQVmXZv2z2inX"
+            );
+          }}
+          className="text-green-600 text-sm"
+        >
+          วิธีการเชื่อมต่อห้องเรียนกับ Line
+        </button>
+      </div>
       <div className=" max-w-6xl mt-5">
         <Divider />
       </div>

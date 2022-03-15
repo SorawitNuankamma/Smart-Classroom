@@ -45,7 +45,10 @@ export default function CreateClassroomPage() {
 
   //Redux
   const dispatch = useDispatch();
-  const { setCurrentAlert } = bindActionCreators(actionCreators, dispatch);
+  const { setCurrentAlert, setCurrentClassroomRole } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
 
   const handleCreateClassroom = async () => {
     //Validate data
@@ -78,6 +81,7 @@ export default function CreateClassroomPage() {
         message: "สร้างห้องเรียนใหม่สำเร็จ",
         link: null,
       });
+      setCurrentClassroomRole("Owner");
       navigate(`/app/my-classroom/${res.data.newClassroom.id}`);
     } else {
       setCurrentAlert({

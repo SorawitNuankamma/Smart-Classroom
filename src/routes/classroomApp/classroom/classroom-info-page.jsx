@@ -5,10 +5,13 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import Divider from "@mui/material/Divider";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
+import { useSelector } from "react-redux";
+
 //Service
 import { getClassroom } from "../../../services/classroom";
 
 export default function ClassroomInfoPage() {
+  const state = useSelector((state) => state);
   const [classroom, setClassroom] = useState([]);
 
   const navigate = useNavigate();
@@ -37,14 +40,16 @@ export default function ClassroomInfoPage() {
       </div>
       <div className="mt-8 font-kanit flex flex-row items-center">
         <span className="text-4xl text-gray-600 ">ข้อมูลของห้องเรียน</span>
-        <button
-          className="ml-5 text-azure"
-          onClick={() => {
-            navigate(`../classroom-setting`);
-          }}
-        >
-          <ModeEditIcon fontSize="large" />
-        </button>
+        {state.user.currentClassroomRole === "Owner" && (
+          <button
+            className="ml-5 text-azure"
+            onClick={() => {
+              navigate(`../classroom-setting`);
+            }}
+          >
+            <ModeEditIcon fontSize="large" />
+          </button>
+        )}
       </div>
       <div className=" max-w-6xl mt-5">
         <Divider />

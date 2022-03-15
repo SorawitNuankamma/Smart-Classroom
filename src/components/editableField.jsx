@@ -24,20 +24,45 @@ export default function EditableField(props) {
       </button>
       {isEditing && (
         <>
-          <input
-            type="text"
-            value={fieldValue}
-            className="
+          {props.type !== "select" && (
+            <input
+              type="text"
+              value={fieldValue}
+              className="
+                    w-fit
                     rounded-md
                     border-gray-300
                     shadow-sm
                     focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
                   "
-            placeholder="classroom name"
-            onChange={(e) => {
-              setFieldValue(e.target.value);
-            }}
-          ></input>
+              placeholder="classroom name"
+              onChange={(e) => {
+                setFieldValue(e.target.value);
+              }}
+            ></input>
+          )}
+          {props.type === "select" && (
+            <select
+              className="
+                    w-fit
+                    mt-1
+                    rounded-md
+                    border-gray-300
+                    shadow-sm
+                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                  "
+              value={fieldValue}
+              onChange={(e) => {
+                setFieldValue(e.target.value);
+              }}
+            >
+              {props.selectData.map((el, index) => (
+                <option key={index} value={el}>
+                  {el}
+                </option>
+              ))}
+            </select>
+          )}
           <button
             onClick={async () => {
               await props.callback(fieldValue);
@@ -63,8 +88,9 @@ export default function EditableField(props) {
           <input
             disabled={true}
             type="text"
-            value={props.text}
+            value={fieldValue}
             className="
+                    w-fit
                     rounded-md
                     border-gray-300
                     shadow-sm
