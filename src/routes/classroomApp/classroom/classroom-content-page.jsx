@@ -74,14 +74,17 @@ export default function ClassroomContentPage() {
         contentId: params.contentId,
         isStudent: false,
       });
-      // merge file attrach
-      let attachFilesClone = [];
-      submissionsResponse.data.submissionsAndFiles.forEach((submissions) => {
-        submissions.files.forEach((file) => {
-          attachFilesClone.push(file);
+      console.log(submissionsResponse);
+      if (submissionsResponse.status === "success") {
+        // merge file attrach
+        let attachFilesClone = [];
+        submissionsResponse.data.submissionsAndFiles.forEach((submissions) => {
+          submissions.files.forEach((file) => {
+            attachFilesClone.push(file);
+          });
         });
-      });
-      setAttachFiles(attachFilesClone);
+        setAttachFiles(attachFilesClone);
+      }
       setContent(res.data.content);
       setContentBody(parse(draftToHtml(JSON.parse(res.data.content.body))));
     }

@@ -72,7 +72,7 @@ export default function ClassroomMemberPage(props) {
       <div className="mt-8 font-kanit">
         <span className="text-2xl text-gray-600 ">รหัสสมาชิก</span>
         <p className="mt-3 text-gray-600 ">
-          {user.code === "0" ? "ยังไม่ถูกสร้าง" : user.code}
+          {user.code === "0" ? "ยังไม่ถูกสร้าง" : user.studentCode}
         </p>
       </div>
       <div className="mt-8 font-kanit">
