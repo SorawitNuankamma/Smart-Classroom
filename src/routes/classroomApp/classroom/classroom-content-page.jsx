@@ -114,14 +114,16 @@ export default function ClassroomContentPage() {
             >
               <ModeEditIcon fontSize="large" />
             </button>
-            <button
-              className="text-azure hover:text-blue-500 "
-              onClick={() => {
-                navigate(`submitted-files`);
-              }}
-            >
-              <Inventory2Icon fontSize="large" />
-            </button>
+            {content.type === "assignment" && (
+              <button
+                className="text-azure hover:text-blue-500 "
+                onClick={() => {
+                  navigate(`submitted-files`);
+                }}
+              >
+                <Inventory2Icon fontSize="large" />
+              </button>
+            )}
           </>
         )}
       </div>
