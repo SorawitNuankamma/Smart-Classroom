@@ -78,7 +78,7 @@ export default function SmartTable(props) {
             text={data.value}
             type={data.type}
             selectData={data.selectData}
-            editEnable={data.editEnable}
+            editEnable={data.editEnable && !props.disableEdit}
           />
         </TableCell>
       );

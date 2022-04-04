@@ -131,6 +131,17 @@ export default function ClassroomMainPage() {
             </span>
             <span className="ml-8">แบบฝึกหัด</span>
           </div>
+          <div
+            className={btnStyle}
+            onClick={() => {
+              handleRouting(`classroom-scoreboard`);
+            }}
+          >
+            <span className="text-azure">
+              <ViewListIcon fontSize="large" />
+            </span>
+            <span className="ml-8">คะแนนสมาชิกห้องเรียน</span>
+          </div>
         </div>
         {state.user.currentClassroomRole !== "Student" && (
           <div className="mt-8 font-kanit">
@@ -145,17 +156,6 @@ export default function ClassroomMainPage() {
                 <AccountBoxIcon fontSize="large" />
               </span>
               <span className="ml-8">สมาชิกห้องเรียน</span>
-            </div>
-            <div
-              className={btnStyle}
-              onClick={() => {
-                handleRouting(`classroom-scoreboard`);
-              }}
-            >
-              <span className="text-azure">
-                <ViewListIcon fontSize="large" />
-              </span>
-              <span className="ml-8">คะแนนสมาชิกห้องเรียน</span>
             </div>
           </div>
         )}

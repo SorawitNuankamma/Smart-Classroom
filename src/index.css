@@ -804,6 +804,9 @@ select {
 .w-\[25rem\] {
   width: 25rem;
 }
+.w-2\/5 {
+  width: 40%;
+}
 .w-\[400px\] {
   width: 400px;
 }
@@ -1113,6 +1116,9 @@ select {
 }
 .p-10 {
   padding: 2.5rem;
+}
+.p-5 {
+  padding: 1.25rem;
 }
 .px-5 {
   padding-left: 1.25rem;

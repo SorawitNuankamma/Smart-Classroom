@@ -147,8 +147,10 @@ const getMemberInfo = async (filterObj) => {
 };
 
 const getAllMembersAndSubmissions = async (filterObj) => {
+  console.log(filterObj);
   let searchParams = new URLSearchParams(filterObj);
 
+  console.log(searchParams.toString());
   const token = window.sessionStorage.accessToken;
   const response = await fetch(
     `${

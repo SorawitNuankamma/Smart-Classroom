@@ -66,14 +66,21 @@ export default function ClassroomScoreBoardPage(props) {
   const [fetchStatus, setFetchStatus] = useState(false);
   const [column, setColumn] = useState();
   const [rows, setRows] = useState();
+  const [classroomStat, setClassroomStat] = useState({});
+  const [rank, setRank] = useState(0);
 
   const navigate = useNavigate();
   let params = useParams();
 
   const handleExportToCSV = async () => {
     // Creating rows in form of an array
+    let studentId =
+      state.user.currentClassroomRole === "Student"
+        ? state.user.currentUser.id
+        : "null";
     const res = await getAllMembersAndSubmissions({
       classroomId: params.classroomId,
+      studentId: studentId,
     });
 
     let columnObject = res.data.column;
@@ -104,9 +111,24 @@ export default function ClassroomScoreBoardPage(props) {
   useEffect(() => {
     async function initial() {
       // Fetch
+      let studentId =
+        state.user.currentClassroomRole === "Student"
+          ? state.user.currentUser.id
+          : "null";
       const res = await getAllMembersAndSubmissions({
         classroomId: params.classroomId,
+        studentId,
       });
+
+      console.log(res);
+      setClassroomStat(res.data.classroomStat);
+      if (state.user.currentClassroomRole === "Student") {
+        res.data.membersStat.forEach((member) => {
+          if (member.column0.userId === state.user.currentUser.id) {
+            setRank(member.rank);
+          }
+        });
+      }
       //Apply Callback function to element+
       res.data.memberSubmissions.forEach((row, index) => {
         Object.keys(row).forEach((column, index) => {
@@ -126,8 +148,6 @@ export default function ClassroomScoreBoardPage(props) {
           };
         });
       });
-
-      console.log(res.data.memberSubmissions);
 
       setColumn(res.data.column);
       setRows(res.data.memberSubmissions);
@@ -155,21 +175,45 @@ export default function ClassroomScoreBoardPage(props) {
         <Divider />
       </div>
       <div className="mt-5 max-w-6xl">
-        {fetchStatus && <SmartTable column={column} rows={rows} />}
+        {fetchStatus && (
+          <SmartTable
+            column={column}
+            rows={rows}
+            disableEdit={state.user.currentClassroomRole === "Student"}
+          />
+        )}
       </div>
-      <div className="mt-5">
-        <button
-          className="px-5 py-3 bg-green-500 hover:bg-green-600 font-kanit text-white rounded-md shadow-sm transition-all ease-in-out"
-          onClick={handleExportToCSV}
-        >
-          Export to CSV
-        </button>
-      </div>
-      <div className="mt-5 text-azure hover:text-blue-500 transition-all ease-in-out ">
-        <a href="https://benzneststudios.com/walletstory/docs/convert-csv-to-utf-8-in-ms-excel/">
-          วิธีการเปิด CSV ไฟล์ด้วย Excel หากมีปัญหาภาษา
-        </a>
-      </div>
+      {state.user.currentClassroomRole !== "Student" && (
+        <>
+          <div className="mt-5">
+            <button
+              className="px-5 py-3 bg-green-500 hover:bg-green-600 font-kanit text-white rounded-md shadow-sm transition-all ease-in-out"
+              onClick={handleExportToCSV}
+            >
+              Export to CSV
+            </button>
+          </div>
+          <div className="mt-5 text-azure hover:text-blue-500 transition-all ease-in-out ">
+            <a href="https://benzneststudios.com/walletstory/docs/convert-csv-to-utf-8-in-ms-excel/">
+              วิธีการเปิด CSV ไฟล์ด้วย Excel หากมีปัญหาภาษา
+            </a>
+          </div>
+        </>
+      )}
+      {fetchStatus && (
+        <>
+          <div className=" w-2/5 rounded-md shadow-md mt-5 p-5">
+            <div className="text-lg">สถิติของห้องเรียน</div>
+            <div className="mt-2">mean: {classroomStat.mean}</div>
+            <div className="mt-2">min: {classroomStat.min}</div>
+            <div className="mt-2">max: {classroomStat.max}</div>
+            <div className="mt-2">std: {classroomStat.std}</div>
+            {state.user.currentClassroomRole === "Student" && (
+              <div className="mt-2">you rank: {rank}</div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }
