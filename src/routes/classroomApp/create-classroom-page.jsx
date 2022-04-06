@@ -73,6 +73,7 @@ export default function CreateClassroomPage() {
       meetingLink: meetingLink,
       timetable: sortedInterval,
     };
+    // xdd
     let res = await postClassroom(classroomObject);
     console.log(res);
     if (res.status === "success") {
