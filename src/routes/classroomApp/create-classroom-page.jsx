@@ -35,6 +35,7 @@ export default function CreateClassroomPage() {
   const [initState, setInitState] = useState("opacity-0	translate-x-10	");
   // Field
   const [nameField, setNameField] = useState(""); // Submit State
+  const [userEmailField, setUserEmailField] = useState("");
   const [meetingLink, setMeetingLink] = useState("");
   const [descField, setDescField] = useState(""); // Submit State
   const [ruleField, setRuleField] = useState(""); // Submit State
@@ -65,6 +66,7 @@ export default function CreateClassroomPage() {
 
     const classroomObject = {
       name: nameField,
+      userEmail: userEmailField,
       description: descField,
       color: classColor,
       rules: ruleField,
@@ -131,6 +133,25 @@ export default function CreateClassroomPage() {
                 placeholder="classroom name"
                 onChange={(e) => {
                   setNameField(e.target.value);
+                }}
+              ></input>
+            </label>
+            <label className="block mt-8">
+              <span className="text-gray-700">อีเมลล์ของฉัน</span>
+              <input
+                type="text"
+                className="
+                    mt-1
+                    block
+                    w-full
+                    rounded-md
+                    border-gray-300
+                    shadow-sm
+                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                  "
+                placeholder="Email"
+                onChange={(e) => {
+                  setUserEmailField(e.target.value);
                 }}
               ></input>
             </label>

@@ -1342,6 +1342,10 @@ select {
   --tw-text-opacity: 1;
   color: rgb(14 165 233 / var(--tw-text-opacity));
 }
+.text-red-400 {
+  --tw-text-opacity: 1;
+  color: rgb(248 113 113 / var(--tw-text-opacity));
+}
 .text-\[\#30A0E0\] {
   --tw-text-opacity: 1;
   color: rgb(48 160 224 / var(--tw-text-opacity));
@@ -1365,10 +1369,6 @@ select {
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
-}
-.text-red-400 {
-  --tw-text-opacity: 1;
-  color: rgb(248 113 113 / var(--tw-text-opacity));
 }
 .text-green-600 {
   --tw-text-opacity: 1;

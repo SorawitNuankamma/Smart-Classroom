@@ -26,6 +26,20 @@ export default function JoinClassroomPage() {
     bindActionCreators(actionCreators, dispatch);
 
   const handleJoinClassroom = async () => {
+    if (
+      accessCode === "" ||
+      nameField === "" ||
+      studentCodeField === "" ||
+      emailField === ""
+    ) {
+      setCurrentAlert({
+        type: "error",
+        title: "ล้มเหลว",
+        message: "กรุณากรอกข้อมูลให้ครบ",
+        link: null,
+      });
+      return;
+    }
     const res = await joinClassroom({
       accessCode: accessCode,
       name: nameField,
@@ -81,6 +95,10 @@ export default function JoinClassroomPage() {
         <Divider />
       </div>
       <div className="mt-6 font-kanit text-gray-600">
+        <div className="mt-5 text-3xl">รายละเอียดการเข้าร่วมห้องเรียน</div>
+        <span className="text-red-400">
+          ทุกช่องต้องกรอกก่อนทีจะดำเนินการต่อ
+        </span>
         <div className="mt-5">
           <span className="text-2xl">รหัสห้องเรียน</span>
           <input

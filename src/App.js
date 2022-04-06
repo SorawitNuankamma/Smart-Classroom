@@ -46,7 +46,7 @@ function App() {
 
   return (
     <div className="relative">
-      {false && <AppAlert />}
+      {true && <AppAlert />}
       <Routes>
         <Route path="/" element={<PublicApp />}>
           <Route index element={<MainPage />} />
